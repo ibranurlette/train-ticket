@@ -1,6 +1,6 @@
 const Login = () => {
   return (
-    <div className="max-w-2xl mx-auto mt-20">
+    <div className="mx-auto w-96">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8">
         <label className="block text-gray-700 text-lg font-bold mb-5">
           Halaman Login

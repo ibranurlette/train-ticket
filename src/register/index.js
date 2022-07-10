@@ -1,6 +1,6 @@
 const Register = () => {
   return (
-    <div className="max-w-2xl mx-auto mt-5 mb-20">
+    <div className="mx-auto w-96 my-5">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8">
         <label className="block text-gray-700 text-lg font-bold mb-5">
           Halaman Register
@@ -111,7 +111,7 @@ const Register = () => {
               className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
             >
-              Masuk
+              Daftar
             </button>
           </div>
         </div>

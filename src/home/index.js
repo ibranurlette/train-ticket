@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div>
+    <div className="mb-auto">
       <div className="bg-gray-100	lg:flex lg:justify-around grid justify-items-center items-center text-center py-7">
         <div>
           <h1 className="text-3xl font-semibold">Hi Pencari Tiket</h1>
@@ -78,7 +78,7 @@ const Home = () => {
         </form>
       </div>
 
-      <div className="overflow-x-scroll m-5">
+      {/* <div className="overflow-x-scroll">
         <table className="table-auto mx-auto ">
           <thead>
             <tr>
@@ -135,7 +135,7 @@ const Home = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };

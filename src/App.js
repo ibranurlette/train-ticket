@@ -10,7 +10,7 @@ import Register from "./register";
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col h-screen justify-between">
       <Router>
         <Header />
         <Routes>
