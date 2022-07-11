@@ -1,0 +1,37 @@
+[{
+    "id": "1",
+    "trainName": "Jayakarta",
+    "class": "Ekonomi",
+    "startTime": "01:00",
+    "qty": 1,
+    "startStation": "Pasar Senen",
+    "endTime": "02:00",
+    "duration": "2j 0m",
+    "endStation": "Lempuyangan",
+    "price": 1000
+  },
+  {
+    "id": "2",
+    "trainName": "Sudorsono",
+    "class": "Eksekutif",
+    "startTime": "17:00",
+    "qty": 1,
+    "startStation": "Gambir",
+    "endTime": "19:00",
+    "duration": "2j 15m",
+    "endStation": "Yogyakarta",
+    "price": 2000
+  },
+  {
+    "id": "3",
+    "trainName": "Madiun",
+    "class": "Bisnis",
+    "startTime": "18:00",
+    "qty": 1,
+    "startStation": "Kramat",
+    "endTime": "20:00",
+    "duration": "2j 13m",
+    "endStation": "Pasar Minggu",
+    "price": 3000
+  }
+]

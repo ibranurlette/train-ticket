@@ -1,4 +1,12 @@
+import React, { useState } from "react";
+
+import ModalBuy from "../modal-buy";
+import ticket from "./ticket.json";
 const Home = () => {
+  const [showTicket, setShowTicket] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [dataTicket, setDataTicket] = useState(ticket);
+
   return (
     <div className="mb-auto">
       <div className="bg-gray-100	lg:flex lg:justify-around grid justify-items-center items-center text-center py-7">
@@ -26,7 +34,7 @@ const Home = () => {
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  for="asal"
+                  htmlFor="asal"
                 >
                   Asal
                 </label>
@@ -40,7 +48,7 @@ const Home = () => {
               <div className="mb-6">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  for="tujuan"
+                  htmlFor="tujuan"
                 >
                   Keberangkatan
                 </label>
@@ -55,7 +63,7 @@ const Home = () => {
               <div className="mb-6">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  for="tujuan"
+                  htmlFor="tujuan"
                 >
                   Tujuan
                 </label>
@@ -77,65 +85,115 @@ const Home = () => {
           </div>
         </form>
       </div>
+      {dataTicket.map((item, index) => (
+        <div
+          key={index}
+          className="mx-auto mb-5 p-6 max-w-3xl bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+        >
+          <div className="md:flex md:justify-around">
+            <div>
+              <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                {item.trainName}
+              </h5>
+              <p className="text-gray-500 text-[15px]">{item.class}</p>
+            </div>
+            <div className="flex justify-between">
+              <div className="mr-5">
+                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                  {item.startTime}
+                </h5>
+                <p className="text-gray-500 text-[15px]">{item.startStation}</p>
+              </div>
 
-      {/* <div className="overflow-x-scroll">
-        <table className="table-auto mx-auto ">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Nomor</th>
-              <th className="border px-4 py-2">Nama Kereta</th>
-              <th className="border px-4 py-2">Berangkat</th>
-              <th className="border px-4 py-2">Tiba</th>
-              <th className="border px-4 py-2">Durasi</th>
-              <th className="border px-4 py-2">Harga / Orang</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">agro wilis</td>
-              <td className="border px-4 py-2">
-                <p>stasiun manggarai</p>
-                <p>07:00:00</p>
-              </td>
-              <td className="border px-4 py-2">
-                <p>Stasiun Surabaya Pasarturi</p>
-                <p>19:00:00</p>
-              </td>
-              <td className="border px-4 py-2">12 Jam 0 Menit</td>
-              <td className="border px-4 py-2">Rp. 300000</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">2</td>
-              <td className="border px-4 py-2">agro wilis</td>
-              <td className="border px-4 py-2">
-                <p>stasiun manggarai</p>
-                <p>07:00:00</p>
-              </td>
-              <td className="border px-4 py-2">
-                <p>Stasiun Surabaya Pasarturi</p>
-                <p>19:00:00</p>
-              </td>
-              <td className="border px-4 py-2">12 Jam 0 Menit</td>
-              <td className="border px-4 py-2">Rp. 300000</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">3</td>
-              <td className="border px-4 py-2">agro wilis</td>
-              <td className="border px-4 py-2">
-                <p>stasiun manggarai</p>
-                <p>07:00:00</p>
-              </td>
-              <td className="border px-4 py-2">
-                <p>Stasiun Surabaya Pasarturi</p>
-                <p>19:00:00</p>
-              </td>
-              <td className="border px-4 py-2">12 Jam 0 Menit</td>
-              <td className="border px-4 py-2">Rp. 300000</td>
-            </tr>
-          </tbody>
-        </table>
-      </div> */}
+              <div className="flex mr-5">
+                <div className="h-0.5 bg-gray-300 w-5 mt-7" />
+                <p className="text-gray-500 text-[15px] mt-4 mx-2">
+                  {item.duration}
+                </p>
+                <div className="h-0.5 bg-gray-300 w-5 mt-7" />
+              </div>
+
+              <div>
+                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                  {item.endTime}
+                </h5>
+                <p className="text-gray-500 text-[15px]">{item.endStation}</p>
+              </div>
+            </div>
+
+            <div className="sm:mt-2">
+              <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white text-right">
+                Rp {item.price * item.qty}
+              </h5>
+              <ModalBuy
+                showModal={showModal}
+                setShowModal={setShowModal}
+                item={item}
+                setDataTicket={setDataTicket}
+              />
+            </div>
+          </div>
+          {/* Main modal */}
+
+          <div className="mt-5 text-center ">
+            <button onClick={() => setShowTicket(!showTicket)}>
+              <p className="text-[15px] text-gray-900 mb-2">
+                Detail Perjalanan
+              </p>
+            </button>
+            {showTicket && <div className="h-1 w-28 bg-gray-900 mx-auto" />}
+          </div>
+          {showTicket ? (
+            <div>
+              <div className="h-px bg-gray-300" />
+              <div className="flex justify-start mt-5">
+                <div>
+                  <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
+                    Jayakarta
+                  </h5>
+                  <p className="text-gray-500 font-semibold text-[14px]">
+                    Ekonomi
+                  </p>
+                </div>
+                <div>
+                  <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-24">
+                    17:10
+                  </h5>
+                  <p className="text-gray-500 font-semibold text-[14px]">
+                    10 Juli 2022
+                  </p>
+                  <p className="text-gray-500 text-[14px] my-2">8j 13m</p>
+
+                  <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                    01:23
+                  </h5>
+                  <p className="text-gray-500 font-semibold text-[14px]">
+                    11 Juli 2022
+                  </p>
+                </div>
+
+                <div>
+                  <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
+                    Jakarta
+                  </h5>
+                  <p className="text-gray-500 font-semibold text-[14px]">
+                    Pasar Senen
+                  </p>
+
+                  <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
+                    Yogyakarta
+                  </h5>
+                  <p className="text-gray-500 font-semibold text-[14px]">
+                    Lempuyangan
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
