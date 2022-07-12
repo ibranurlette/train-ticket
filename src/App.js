@@ -7,6 +7,7 @@ import Header from "./header";
 import Footer from "./footer";
 import Login from "./login";
 import Register from "./register";
+import Payment from "./payment";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </Router>
       <Footer />

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
   const handleIncreament = (ticket_id) => {
     setDataTicket((dataTicket) =>
@@ -9,7 +11,9 @@ const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
   const handleDecreament = (ticket_id) => {
     setDataTicket((dataTicket) =>
       dataTicket.map((item) =>
-        ticket_id === item.id ? { ...item, qty: item.qty - 1 } : item
+        ticket_id === item.id
+          ? { ...item, qty: item.qty - (item.qty > 1 ? 1 : 0) }
+          : item
       )
     );
   };
@@ -94,14 +98,14 @@ const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
                       type="button"
                       className="bg-gray-900 text-center text-white font-bold rounded w-10 h-10"
                       onClick={() => {
-                        handleIncreament(item.id);
+                        handleDecreament(item.id);
                       }}
                     >
-                      +
+                      -
                     </button>
 
                     <input
-                      className="shadow w-20 appearance-none border rounded py-2 mx-2 text-center text-gray-700 my-3 leading-tight focus:outline-none focus:shadow-outline"
+                      className="shadow w-20 appearance-none border rounded py-2 my-3 mx-2 text-center text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="qty"
                       type="number"
                       placeholder="1"
@@ -113,10 +117,10 @@ const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
                       type="button"
                       className="bg-gray-900 text-center text-white font-bold rounded w-10 h-10"
                       onClick={() => {
-                        handleDecreament(item.id);
+                        handleIncreament(item.id);
                       }}
                     >
-                      -
+                      +
                     </button>
                   </div>
 
@@ -136,9 +140,9 @@ const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
                   <button
                     className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {}}
                   >
-                    Beli Sekarang
+                    <Link to="/payment">Beli Sekarang</Link>
                   </button>
                 </div>
               </div>

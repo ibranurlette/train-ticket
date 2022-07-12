@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import ModalBuy from "../modal-buy";
-import ticket from "./ticket.json";
+import ticket from "../ticket.json";
 const Home = () => {
   const [showTicket, setShowTicket] = useState(false);
   const [showModal, setShowModal] = useState(false);
