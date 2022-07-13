@@ -9,6 +9,7 @@ import Login from "./login";
 import Register from "./register";
 import Payment from "./payment";
 import Order from "./order";
+import Transaction from "./admin/transaction";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/order" element={<Order />} />
+          <Route path="/transaction" element={<Transaction />} />
         </Routes>
       </Router>
       <Footer />

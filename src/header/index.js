@@ -8,6 +8,9 @@ const Header = () => {
         <Link to="/" className="mr-5">
           Home
         </Link>
+        <Link to="/transaction" className="mr-5">
+          Transaksi
+        </Link>
         <Link to="/order" className="mr-5">
           Order
         </Link>
