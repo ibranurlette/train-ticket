@@ -1,0 +1,17 @@
+import axios from 'axios';
+import {GET_ONE_TICKET} from '../config/constants';
+import {API} from '../config/api';
+
+export const get_One_ticket = (id) => {
+	console.log(id, "ini data id")
+  return {
+    type: GET_ONE_TICKET,
+    payload: async () => {
+      	const res = await API.get(`/ticket/${id}`);
+      	console.log(res, "ini data respon")
+      	const {data} = res.data;
+      	 return data;
+    }
+
+  };
+};
