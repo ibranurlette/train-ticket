@@ -1,4 +1,7 @@
+import React, { useState } from "react";
+import ModalFinishPayment from "../modal-finish-payment";
 const Payment = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="w-[100%] max-w-4xl mx-auto">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 mx-auto">
@@ -17,7 +20,6 @@ const Payment = () => {
             </div>
             <p className="mb-2 text-gray-700 font-bold">Alamat</p>
             <div className="mb-4 text-base font-medium">
-              {/* <table className="border-collapse border border-slate-400"> */}
               <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -83,9 +85,10 @@ const Payment = () => {
                 </div>
               </div>
 
-              <div className="sm:mt-2">
+              <div className="sm:mt-2 md:mt-0">
+                <p className="text-gray-500 text-[15px]">2 x Rp 2000</p>
                 <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-right sm:text-center ">
-                  Harga : Rp 2000
+                  Total : Rp 4000
                 </h5>
               </div>
             </div>
@@ -103,13 +106,10 @@ const Payment = () => {
               />
             </div>
             <div>
-              <button
-                className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={() => {}}
-              >
-                Bayar Sekarang
-              </button>
+              <ModalFinishPayment
+                showModal={showModal}
+                setShowModal={setShowModal}
+              />
             </div>
           </div>
         </div>
