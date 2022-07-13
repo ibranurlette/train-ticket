@@ -8,6 +8,7 @@ import Footer from "./footer";
 import Login from "./login";
 import Register from "./register";
 import Payment from "./payment";
+import Order from "./order";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/order" element={<Order />} />
         </Routes>
       </Router>
       <Footer />

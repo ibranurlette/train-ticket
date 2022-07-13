@@ -10,8 +10,8 @@ const Payment = () => {
             <p className="mb-1 text-gray-700 font-bold">Pembayaran</p>
             <div className="mb-4 border shadow-md rounded-lg p-5 text-justify text-base font-medium">
               <p>
-                Tiket bisa kamu bayar dengan cara transfer ke rekening di bawah,
-                bisa menggunakan ATM, Mobile Banking dan Internet Banking.
+                Tiket bisa kamu bayar melalui rekening di bawah ini, kamu bisa
+                transfer menggunakan ATM, Mobile Banking dan Internet Banking.
               </p>
               <p className="text-blue-500">Rekening BNI : 83218492194</p>
             </div>

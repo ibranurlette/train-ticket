@@ -10,7 +10,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="name"
+                htmlFor="name"
               >
                 Name
               </label>
@@ -24,7 +24,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="username"
+                htmlFor="username"
               >
                 Username
               </label>
@@ -38,7 +38,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="email"
+                htmlFor="email"
               >
                 Email
               </label>
@@ -52,7 +52,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -67,7 +67,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="gender"
+                htmlFor="gender"
               >
                 gender
               </label>
@@ -81,7 +81,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="phone"
+                htmlFor="phone"
               >
                 phone
               </label>
@@ -95,7 +95,7 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="alamat"
+                htmlFor="alamat"
               >
                 Alamat
               </label>
