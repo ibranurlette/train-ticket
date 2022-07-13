@@ -10,6 +10,7 @@ import Register from "./register";
 import Payment from "./payment";
 import Order from "./order";
 import Transaction from "./admin/transaction";
+import CreateTicket from "./admin/createTicket";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/order" element={<Order />} />
           <Route path="/transaction" element={<Transaction />} />
+          <Route path="/create-ticket" element={<CreateTicket />} />
         </Routes>
       </Router>
       <Footer />
