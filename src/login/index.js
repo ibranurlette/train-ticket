@@ -21,8 +21,6 @@ const Login = () => {
       });
   };
 
-  console.log(error ? "ibra" : "bukan ibra");
-
   return (
     <div className="mx-auto w-96">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8">

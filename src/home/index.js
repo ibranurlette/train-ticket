@@ -1,13 +1,31 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import ModalBuy from "../modal-buy";
-import ticket from "../ticket.json";
+
+import { get_ticket } from "../client/_action/cari_ticket";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+
   const [showTicket, setShowTicket] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [dataTicket, setDataTicket] = useState(ticket);
+  const [dataTicket, setDataTicket] = useState([]);
+
+  const [startStation, setStartStation] = useState("");
+  const [destination, setDestination] = useState("");
+  const [dateStart, setDateStart] = useState("");
+
+  const handlSearch = () => {
+    dispatch(get_ticket({ startStation, destination, dateStart }))
+      .then(async (res) => {
+        setDataTicket(res.value);
+      })
+      .catch((err) => {
+        console.log("ERROR CARI DATA", err);
+      });
+  };
 
   return (
     <div className="mb-auto">
@@ -49,7 +67,12 @@ const Home = () => {
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="asal"
-                  type="text"
+                  type="start-station"
+                  name="start-station"
+                  value={startStation}
+                  onChange={(e) => {
+                    setStartStation(e.target.value);
+                  }}
                   placeholder="Asal"
                 />
               </div>
@@ -62,8 +85,13 @@ const Home = () => {
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="keberangkatan"
+                  id="date-start"
                   type="date"
+                  name="date-start"
+                  value={dateStart}
+                  onChange={(e) => {
+                    setDateStart(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -77,8 +105,13 @@ const Home = () => {
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="tujuan"
+                  id="destination"
                   type="text"
+                  name="destination"
+                  value={destination}
+                  onChange={(e) => {
+                    setDestination(e.target.value);
+                  }}
                   placeholder="Tujuan"
                 />
               </div>
@@ -86,6 +119,7 @@ const Home = () => {
               <button
                 className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={handlSearch}
               >
                 Cari Tiket
               </button>
@@ -93,115 +127,128 @@ const Home = () => {
           </div>
         </form>
       </div>
-      {dataTicket.map((item, index) => (
-        <div
-          key={index}
-          className="mx-auto mb-5 p-6 max-w-3xl bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
-        >
-          <div className="md:flex md:justify-around">
-            <div>
-              <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
-                {item.trainName}
-              </h5>
-              <p className="text-gray-500 text-[15px]">{item.class}</p>
-            </div>
-            <div className="flex justify-between">
-              <div className="mr-5">
-                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                  {item.startTime}
-                </h5>
-                <p className="text-gray-500 text-[15px]">{item.startStation}</p>
-              </div>
 
-              <div className="flex mr-5">
-                <div className="h-0.5 bg-gray-300 w-5 mt-7" />
-                <p className="text-gray-500 text-[15px] mt-4 mx-2">
-                  {item.duration}
-                </p>
-                <div className="h-0.5 bg-gray-300 w-5 mt-7" />
-              </div>
-
-              <div>
-                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                  {item.endTime}
-                </h5>
-                <p className="text-gray-500 text-[15px]">{item.endStation}</p>
-              </div>
-            </div>
-
-            <div className="sm:mt-2">
-              <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white text-right">
-                Rp {item.price * item.qty}
-              </h5>
-              <ModalBuy
-                showModal={showModal}
-                setShowModal={setShowModal}
-                item={item}
-                setDataTicket={setDataTicket}
-              />
-            </div>
-          </div>
-          {/* Main modal */}
-
-          <div className="mt-5 text-center ">
-            <button onClick={() => setShowTicket(!showTicket)}>
-              <p className="text-[15px] text-gray-900 mb-2">
-                Detail Perjalanan
-              </p>
-            </button>
-            {showTicket && <div className="h-1 w-28 bg-gray-900 mx-auto" />}
-          </div>
-          {showTicket ? (
-            <div>
-              <div className="h-px bg-gray-300" />
-              <div className="flex justify-start mt-5">
-                <div>
-                  <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
-                    Jayakarta
-                  </h5>
-                  <p className="text-gray-500 font-semibold text-[14px]">
-                    Ekonomi
-                  </p>
-                </div>
-                <div>
-                  <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-24">
-                    17:10
-                  </h5>
-                  <p className="text-gray-500 font-semibold text-[14px]">
-                    10 Juli 2022
-                  </p>
-                  <p className="text-gray-500 text-[14px] my-2">8j 13m</p>
-
-                  <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
-                    01:23
-                  </h5>
-                  <p className="text-gray-500 font-semibold text-[14px]">
-                    11 Juli 2022
-                  </p>
-                </div>
-
-                <div>
-                  <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
-                    Jakarta
-                  </h5>
-                  <p className="text-gray-500 font-semibold text-[14px]">
-                    Pasar Senen
-                  </p>
-
-                  <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
-                    Yogyakarta
-                  </h5>
-                  <p className="text-gray-500 font-semibold text-[14px]">
-                    Lempuyangan
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <></>
-          )}
+      {dataTicket.length === 0 ? (
+        <div className="text-center my-5 font-bold text-lg text-red-500">
+          Data Tidak Ditemukan
         </div>
-      ))}
+      ) : (
+        dataTicket.map((item, index) => (
+          <div
+            key={index}
+            className="mx-auto mb-5 p-6 max-w-3xl bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+          >
+            <div className="md:flex md:justify-around">
+              <div>
+                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                  {item.nameTrain}
+                </h5>
+                <p className="text-gray-500 text-[15px]">
+                  {item.typeTrain.name}
+                </p>
+              </div>
+              <div className="flex justify-between">
+                <div className="mr-5">
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                    {item.startTime}
+                  </h5>
+                  <p className="text-gray-500 text-[15px]">
+                    {item.startStation}
+                  </p>
+                </div>
+
+                <div className="flex mr-5">
+                  <div className="h-0.5 bg-gray-300 w-5 mt-7" />
+                  <p className="text-gray-500 text-[15px] mt-4 mx-2">
+                    {/* {item.duration} */}2j 0
+                  </p>
+                  <div className="h-0.5 bg-gray-300 w-5 mt-7" />
+                </div>
+
+                <div>
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                    {item.arrivalTime}
+                  </h5>
+                  <p className="text-gray-500 text-[15px]">
+                    {item.destination}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:mt-2">
+                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white text-right">
+                  Rp {item.price}
+                </h5>
+                <ModalBuy
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                  item={item}
+                  setDataTicket={setDataTicket}
+                />
+              </div>
+            </div>
+            {/* Main modal */}
+
+            <div className="mt-5 text-center ">
+              <button onClick={() => setShowTicket(!showTicket)}>
+                <p className="text-[15px] text-gray-900 mb-2">
+                  Detail Perjalanan
+                </p>
+              </button>
+              {showTicket && <div className="h-1 w-28 bg-gray-900 mx-auto" />}
+            </div>
+            {showTicket ? (
+              <div>
+                <div className="h-px bg-gray-300" />
+                <div className="flex justify-start mt-5">
+                  <div>
+                    <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
+                      {item.nameTrain}
+                    </h5>
+                    <p className="text-gray-500 font-semibold text-[14px]">
+                      {item.typeTrain.name}
+                    </p>
+                  </div>
+                  <div>
+                    <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-24">
+                      {item.startTIme}
+                    </h5>
+                    <p className="text-gray-500 font-semibold text-[14px]">
+                      {item.dateStart}
+                    </p>
+                    <p className="text-gray-500 text-[14px] my-2">8j 13m</p>
+
+                    <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item.arrivalTime}
+                    </h5>
+                    <p className="text-gray-500 font-semibold text-[14px]">
+                      11 Juli 2022
+                    </p>
+                  </div>
+
+                  <div>
+                    <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
+                      Jakarta
+                    </h5>
+                    <p className="text-gray-500 font-semibold text-[14px]">
+                      {item.startStation}
+                    </p>
+
+                    <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
+                      Yogyakarta
+                    </h5>
+                    <p className="text-gray-500 font-semibold text-[14px]">
+                      {item.destination}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ))
+      )}
     </div>
   );
 };
