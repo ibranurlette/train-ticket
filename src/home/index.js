@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 import ModalBuy from "../modal-buy";
 import ticket from "../ticket.json";
+
 const Home = () => {
+  const token = localStorage.getItem("token");
   const [showTicket, setShowTicket] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [dataTicket, setDataTicket] = useState(ticket);
@@ -12,10 +14,16 @@ const Home = () => {
       <div className="bg-gray-100	lg:flex lg:justify-around grid justify-items-center items-center text-center py-7">
         <div>
           <h1 className="text-3xl font-semibold">Hi Pencari Tiket</h1>
-          <h1 className="font-medium">Daftar Sekarang!!</h1>
-          <button className="bg-gray-800 text-white px-5 py-2 rounded mt-2 font-bold">
-            Daftar
-          </button>
+          {token ? (
+            <h1 className="font-medium">Selamat Datang </h1>
+          ) : (
+            <>
+              <h1 className="font-medium">Daftar Sekarang!!</h1>
+              <button className="bg-gray-800 text-white px-5 py-2 rounded mt-2 font-bold">
+                Daftar
+              </button>
+            </>
+          )}
         </div>
         <img
           src={require("../assets/iklan2.jpeg")}

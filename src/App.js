@@ -14,13 +14,14 @@ import CreateTicket from "./admin/createTicket";
 
 function App() {
   const token = localStorage.getItem("token");
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const pathname = window.location.pathname;
 
+  // Navigate back to home if already login or token already exist
   useEffect(() => {
-    token
-      ? navigate("/", { replace: true })
-      : navigate("/login", { replace: true });
-  }, [token, navigate]);
+    ((token && pathname === "/login") || (token && pathname === "/register")) &&
+      navigate("/");
+  }, [token, pathname, navigate]);
 
   return (
     <div className="flex flex-col h-screen justify-between">
@@ -33,6 +34,7 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/create-ticket" element={<CreateTicket />} />
+        )}
       </Routes>
       <Footer />
     </div>

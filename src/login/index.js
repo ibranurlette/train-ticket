@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { login } from "../client/_action/auth";
 
 const Login = () => {
-  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -21,11 +20,6 @@ const Login = () => {
         setError(err.response.data.message);
       });
   };
-  useEffect(() => {
-    token
-      ? navigate("/", { replace: true })
-      : navigate("/login", { replace: true });
-  }, [token, navigate]);
 
   console.log(error ? "ibra" : "bukan ibra");
 
