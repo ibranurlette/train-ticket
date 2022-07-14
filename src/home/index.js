@@ -12,6 +12,7 @@ const Home = () => {
   const [showTicket, setShowTicket] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [dataTicket, setDataTicket] = useState([]);
+  const [fetch, setFetch] = useState(false);
 
   const [startStation, setStartStation] = useState("");
   const [destination, setDestination] = useState("");
@@ -20,6 +21,7 @@ const Home = () => {
   const handlSearch = () => {
     dispatch(get_ticket({ startStation, destination, dateStart }))
       .then(async (res) => {
+        setFetch(true);
         setDataTicket(res.value);
       })
       .catch((err) => {
@@ -120,6 +122,11 @@ const Home = () => {
                 className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 onClick={handlSearch}
+                disabled={
+                  startStation === "" || destination === "" || dateStart === ""
+                    ? true
+                    : false
+                }
               >
                 Cari Tiket
               </button>
@@ -128,7 +135,7 @@ const Home = () => {
         </form>
       </div>
 
-      {dataTicket.length === 0 ? (
+      {dataTicket.length === 0 && fetch === true ? (
         <div className="text-center my-5 font-bold text-lg text-red-500">
           Data Tidak Ditemukan
         </div>
