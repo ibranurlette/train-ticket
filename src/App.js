@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 
 import Home from "./home";
@@ -13,20 +13,27 @@ import Transaction from "./admin/transaction";
 import CreateTicket from "./admin/createTicket";
 
 function App() {
+  const token = localStorage.getItem("token");
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    token
+      ? navigate("/", { replace: true })
+      : navigate("/login", { replace: true });
+  }, [token, navigate]);
+
   return (
     <div className="flex flex-col h-screen justify-between">
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/transaction" element={<Transaction />} />
-          <Route path="/create-ticket" element={<CreateTicket />} />
-        </Routes>
-      </Router>
+      <Header />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/transaction" element={<Transaction />} />
+        <Route path="/create-ticket" element={<CreateTicket />} />
+      </Routes>
       <Footer />
     </div>
   );
