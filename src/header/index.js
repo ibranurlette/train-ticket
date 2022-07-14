@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+    navigate("/", { replace: true });
+  };
 
   const RouteAlreadyLogin = () => (
     <>
@@ -17,6 +24,11 @@ const Header = () => {
       <Link to="/order" className="mr-5">
         Order
       </Link>
+      {token && (
+        <Link to="/" className="mr-5" onClick={handleLogout}>
+          Keluar
+        </Link>
+      )}
     </>
   );
 
