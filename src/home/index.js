@@ -17,6 +17,7 @@ const Home = () => {
   const [startStation, setStartStation] = useState("");
   const [destination, setDestination] = useState("");
   const [dateStart, setDateStart] = useState("");
+  const [seeDetail, setSeeDetail] = useState();
 
   const handlSearch = () => {
     dispatch(get_ticket({ startStation, destination, dateStart }))
@@ -197,14 +198,24 @@ const Home = () => {
             {/* Main modal */}
 
             <div className="mt-5 text-center ">
-              <button onClick={() => setShowTicket(!showTicket)}>
+              <button
+                onClick={() => {
+                  setShowTicket(!showTicket);
+                  setSeeDetail(dataTicket[index]);
+                }}
+              >
                 <p className="text-[15px] text-gray-900 mb-2">
                   Detail Perjalanan
                 </p>
               </button>
-              {showTicket && <div className="h-1 w-28 bg-gray-900 mx-auto" />}
+              {showTicket && seeDetail.id === item.id ? (
+                <div className="h-1 w-28 bg-gray-900 mx-auto" />
+              ) : (
+                <></>
+              )}
             </div>
-            {showTicket ? (
+
+            {showTicket && seeDetail.id === item.id ? (
               <div>
                 <div className="h-px bg-gray-300" />
                 <div className="flex justify-start mt-5">
