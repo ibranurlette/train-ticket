@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
 
-const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
+const ModalBuy = ({
+  showModal,
+  setShowModal,
+  setDataTicket,
+  dataTicket,
+  setSeeDetail,
+  seeDetail,
+  item,
+  index,
+}) => {
   const handleIncreament = (ticket_id) => {
     setDataTicket((dataTicket) =>
       dataTicket.map((item) =>
@@ -23,11 +32,14 @@ const ModalBuy = ({ showModal, setShowModal, setDataTicket, item }) => {
         className="sm:w-full bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-9 rounded focus:outline-none focus:shadow-outline"
         data-modal-toggle="defaultModal"
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          setShowModal(true);
+          setSeeDetail(dataTicket[index]);
+        }}
       >
         Pilih
       </button>
-      {showModal ? (
+      {showModal && seeDetail.id === item.id ? (
         <>
           <div className="mx-2 justify-center fade items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">

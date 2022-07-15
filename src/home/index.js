@@ -191,7 +191,11 @@ const Home = () => {
                   showModal={showModal}
                   setShowModal={setShowModal}
                   item={item}
+                  index={index}
                   setDataTicket={setDataTicket}
+                  dataTicket={dataTicket}
+                  setSeeDetail={setSeeDetail}
+                  seeDetail={seeDetail}
                 />
               </div>
             </div>
