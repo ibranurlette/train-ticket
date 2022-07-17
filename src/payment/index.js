@@ -1,7 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { getUsers } from "../client/_action/user";
+import { getOneTicket } from "../client/_action/ticket";
+
 import ModalFinishPayment from "../modal-finish-payment";
+
 const Payment = () => {
+  const dispatch = useDispatch();
+  const { state } = useLocation();
+  const ticket = state.ticket;
   const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState();
+  const [train, setTrain] = useState();
+
+  useEffect(() => {
+    dispatch(getUsers())
+      .then(async (res) => {
+        setUser(res.value);
+      })
+      .catch((err) => {
+        console.log("ERROR CARI DATA", err);
+      });
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getOneTicket(ticket.Train_id))
+      .then(async (res) => {
+        setTrain(res.value);
+      })
+      .catch((err) => {
+        console.log("ERROR CARI DATA", err);
+      });
+  }, [dispatch, ticket.Train_id]);
+
   return (
     <div className="w-[100%] max-w-4xl mx-auto">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 mx-auto">
@@ -19,56 +52,60 @@ const Payment = () => {
               <p className="text-blue-500">Rekening BNI : 83218492194</p>
             </div>
             <p className="mb-2 text-gray-700 font-bold">Alamat</p>
-            <div className="mb-4 text-base font-medium">
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">
-                        Nama
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Handphone
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Email
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Alamat
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <td className="px-6 py-4"> Ibra Nurlette</td>
-                      <td className="px-6 py-4">082110839417</td>
-                      <td className="px-6 py-4">ibraputra843@gmail.com</td>
-                      <td className="px-6 py-4">
-                        Jl Salameb Tengah II Paseban Senen
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            {user ? (
+              <div className="mb-4 text-base font-medium">
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                        <th scope="col" className="px-6 py-3">
+                          Nama
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          Handphone
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          Email
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          Alamat
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td className="px-6 py-4">{user.name}</td>
+                        <td className="px-6 py-4">{user.phone}</td>
+                        <td className="px-6 py-4">{user.email}</td>
+                        <td className="px-6 py-4">{user.addres}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            ) : (
+              <>Loading</>
+            )}
           </div>
           <p className="mb-2 text-gray-700 font-bold">Rute Kereta</p>
           <div className="border shadow-md rounded-lg py-5 bg-gray-50">
             <div className="lg:flex md:justify-around">
               <div>
                 <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
-                  Jayakarta
+                  {train.nameTrain}
                 </h5>
                 <p className="text-gray-500 text-[15px] sm:text-center md:text-left sm:mb-4 md:mb-0">
-                  Ekonomi
+                  {train.typeTrain.name}
                 </p>
               </div>
               <div className="md:flex md:justify-between text-center">
                 <div className="md:mr-5">
                   <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                    02:00
+                    {train.startTime}
                   </h5>
-                  <p className="text-gray-500 text-[15px]">Pasar Senen</p>
+                  <p className="text-gray-500 text-[15px]">
+                    {train.startStation}
+                  </p>
                 </div>
 
                 <div className="md:flex md:mr-5 sm:my-2 md:my-0">
@@ -79,16 +116,20 @@ const Payment = () => {
 
                 <div>
                   <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                    04:00
+                    {train.arrivalTime}
                   </h5>
-                  <p className="text-gray-500 text-[15px]">Lempuyangan</p>
+                  <p className="text-gray-500 text-[15px]">
+                    {train.destination}
+                  </p>
                 </div>
               </div>
 
               <div className="sm:mt-2 md:mt-0">
-                <p className="text-gray-500 text-[15px]">2 x Rp 2000</p>
+                <p className="text-gray-500 text-[15px]">
+                  {ticket.qty} x Rp {train.price}
+                </p>
                 <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-right sm:text-center ">
-                  Total : Rp 4000
+                  Total : Rp {ticket.Total_price}
                 </h5>
               </div>
             </div>

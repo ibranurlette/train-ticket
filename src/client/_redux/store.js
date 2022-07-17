@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 
-
 import auth from "../_reducers/auth";
 import auth_reload from "../_reducers/auth_reload";
+import tickets from "../_reducers/tickets";
 import ticket from "../_reducers/ticket";
 import user from "../_reducers/user";
 import Tambah_train from "../_reducers/tambah_train";
@@ -20,6 +20,7 @@ const rootReducers = combineReducers({
   auth,
   auth_reload,
   ticket,
+  tickets,
   user,
   payment,
   Tambah_train,
@@ -27,9 +28,7 @@ const rootReducers = combineReducers({
   Cari_ticket,
   Hapus_payment,
   Beli_ticket,
-  update_payment
-
-
+  update_payment,
 });
 
 // Setup store for Redux

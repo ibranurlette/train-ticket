@@ -1,30 +1,30 @@
-import { GET_ONE_TICKET } from "../config/constants";
+import { GET_MYTICKET } from "../config/constants";
 
 // Setup Reducer for Redux
 const initialState = {
   data: [],
   error: false,
-  loading: false,
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case `${GET_ONE_TICKET}_PENDING`:
+    case `${GET_MYTICKET}_PENDING`:
       return {
         ...state,
-        loading: true,
+          loading: true
       };
-    case `${GET_ONE_TICKET}_FULFILLED`:
+    case `${GET_MYTICKET}_FULFILLED`:
       return {
         ...state,
-        loading: false,
-        data: action.payload,
+          loading: false,
+        data: action.payload
       };
-    case `${GET_ONE_TICKET}_REJECTED`:
+    case `${GET_MYTICKET}_REJECTED`:
       return {
         ...state,
         error: true,
-        loading: false,
+        loading: false
       };
     default:
       return state;

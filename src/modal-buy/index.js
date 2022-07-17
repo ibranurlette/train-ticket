@@ -1,4 +1,7 @@
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { Beli_ticket } from "../client/_action/beli_ticket";
 
 const ModalBuy = ({
   showModal,
@@ -10,22 +13,51 @@ const ModalBuy = ({
   item,
   index,
 }) => {
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
   const handleIncreament = (ticket_id) => {
     setDataTicket((dataTicket) =>
       dataTicket.map((item) =>
-        ticket_id === item.id ? { ...item, qty: item.qty + 1 } : item
+        ticket_id === item.id ? { ...item, qty: parseInt(item.qty) + 1 } : item
       )
     );
   };
+
   const handleDecreament = (ticket_id) => {
     setDataTicket((dataTicket) =>
       dataTicket.map((item) =>
         ticket_id === item.id
-          ? { ...item, qty: item.qty - (item.qty > 1 ? 1 : 0) }
+          ? {
+              ...item,
+              qty: parseInt(item.qty) - (parseInt(item.qty) > 1 ? 1 : 0),
+            }
           : item
       )
     );
   };
+
+  const handlebuy = () => {
+    dispatch(
+      Beli_ticket({
+        Train_id: item.id,
+        qty: item.qty,
+        Total_price: parseInt(item.price) * parseInt(item.qty),
+        status: "pending",
+      })
+    )
+      .then(async (res) => {
+        console.log("response", res.value);
+        navigate("/payment", {
+          state: { ticket: res.value },
+        });
+      })
+      .catch((err) => {
+        console.log("THE ERRORO", err);
+        // setError(err.response.data.message);
+      });
+  };
+
   return (
     <div>
       <button
@@ -60,10 +92,10 @@ const ModalBuy = ({
                     <div className="flex justify-start">
                       <div>
                         <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
-                          {item.trainName}
+                          {item.nameTrain}
                         </h5>
                         <p className="text-gray-500 font-semibold text-[14px]">
-                          {item.class}
+                          {item.typeTrain.name}
                         </p>
                       </div>
                       <div>
@@ -74,11 +106,12 @@ const ModalBuy = ({
                           10 Juli 2022
                         </p>
                         <p className="text-gray-500 text-[14px] my-2">
-                          {item.duration}
+                          2j 0m
+                          {/* {item.duration} */}
                         </p>
 
                         <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
-                          {item.endTime}
+                          {item.arrivalTime}
                         </h5>
                         <p className="text-gray-500 font-semibold text-[14px]">
                           11 Juli 2022
@@ -97,7 +130,7 @@ const ModalBuy = ({
                           Yogyakarta
                         </h5>
                         <p className="text-gray-500 font-semibold text-[14px]">
-                          {item.endStation}
+                          {item.destination}
                         </p>
                       </div>
                     </div>
@@ -121,7 +154,7 @@ const ModalBuy = ({
                       id="qty"
                       type="number"
                       placeholder="1"
-                      value={item.qty}
+                      value={parseInt(item.qty)}
                       onChange={() => {}}
                     />
 
@@ -137,7 +170,7 @@ const ModalBuy = ({
                   </div>
 
                   <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white text-right">
-                    Rp {item.price * item.qty}
+                    Rp {parseInt(item.price) * parseInt(item.qty)}
                   </h5>
                 </div>
                 {/*footer*/}
@@ -152,9 +185,9 @@ const ModalBuy = ({
                   <button
                     className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => {}}
+                    onClick={handlebuy}
                   >
-                    <Link to="/payment">Beli Sekarang</Link>
+                    Beli Sekarang
                   </button>
                 </div>
               </div>
