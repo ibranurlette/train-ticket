@@ -17,8 +17,8 @@ const Register = () => {
   });
   const [error, setError] = useState("");
 
-  console.log("form", form);
-  const handleRegister = () => {
+  const handleRegister = (event) => {
+    event.preventDefault();
     dispatch(register(form))
       .then(async (res) => {
         navigate("/", { replace: true });
@@ -130,15 +130,27 @@ const Register = () => {
               >
                 gender
               </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="gender"
-                type="text"
-                name="gender"
-                value={form.gender}
-                onChange={(e) => setForm({ ...form, gender: e.target.value })}
-                placeholder="gender"
-              />
+              <div className="relative">
+                <select
+                  className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-state"
+                  onChange={(e) => setForm({ ...form, gender: e.target.value })}
+                  value={form.gender}
+                >
+                  <option value="">Pilih</option>
+                  <option value="male">Laki-Laki</option>
+                  <option value="female">Perempuan</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
             </div>
             <div className="mb-6">
               <label
@@ -177,8 +189,8 @@ const Register = () => {
 
             <button
               className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={handleRegister}
+              type="submit"
+              onClick={(e) => handleRegister(e)}
             >
               Daftar
             </button>
