@@ -88,52 +88,57 @@ const Payment = () => {
             )}
           </div>
           <p className="mb-2 text-gray-700 font-bold">Rute Kereta</p>
-          <div className="border shadow-md rounded-lg py-5 bg-gray-50">
-            <div className="lg:flex md:justify-around">
-              <div>
-                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
-                  {train.nameTrain}
-                </h5>
-                <p className="text-gray-500 text-[15px] sm:text-center md:text-left sm:mb-4 md:mb-0">
-                  {train.typeTrain.name}
-                </p>
-              </div>
-              <div className="md:flex md:justify-between text-center">
-                <div className="md:mr-5">
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                    {train.startTime}
-                  </h5>
-                  <p className="text-gray-500 text-[15px]">
-                    {train.startStation}
-                  </p>
-                </div>
 
-                <div className="md:flex md:mr-5 sm:my-2 md:my-0">
-                  <div className="h-0.5 bg-gray-300 md:w-5 sm:w-1 sm:h-5 md:h-1 md:mt-7 sm:mt-2 mx-auto" />
-                  <p className="text-gray-500 text-[15px] mt-4 mx-2">2j 0m</p>
-                  <div className="h-0.5 bg-gray-300 md:w-5 sm:w-1 sm:h-5 md:h-1 md:mt-7 sm:mt-2 mx-auto" />
-                </div>
-
+          {train ? (
+            <div className="border shadow-md rounded-lg py-5 bg-gray-50">
+              <div className="lg:flex md:justify-around">
                 <div>
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                    {train.arrivalTime}
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                    {train.nameTrain}
                   </h5>
-                  <p className="text-gray-500 text-[15px]">
-                    {train.destination}
+                  <p className="text-gray-500 text-[15px] sm:text-center md:text-left sm:mb-4 md:mb-0">
+                    {train.typeTrain.name}
                   </p>
                 </div>
-              </div>
+                <div className="md:flex md:justify-between text-center">
+                  <div className="md:mr-5">
+                    <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                      {train.startTime}
+                    </h5>
+                    <p className="text-gray-500 text-[15px]">
+                      {train.startStation}
+                    </p>
+                  </div>
 
-              <div className="sm:mt-2 md:mt-0">
-                <p className="text-gray-500 text-[15px]">
-                  {ticket.qty} x Rp {train.price}
-                </p>
-                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-right sm:text-center ">
-                  Total : Rp {ticket.Total_price}
-                </h5>
+                  <div className="md:flex md:mr-5 sm:my-2 md:my-0">
+                    <div className="h-0.5 bg-gray-300 md:w-5 sm:w-1 sm:h-5 md:h-1 md:mt-7 sm:mt-2 mx-auto" />
+                    <p className="text-gray-500 text-[15px] mt-4 mx-2">2j 0m</p>
+                    <div className="h-0.5 bg-gray-300 md:w-5 sm:w-1 sm:h-5 md:h-1 md:mt-7 sm:mt-2 mx-auto" />
+                  </div>
+
+                  <div>
+                    <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                      {train.arrivalTime}
+                    </h5>
+                    <p className="text-gray-500 text-[15px]">
+                      {train.destination}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="sm:mt-2 md:mt-0">
+                  <p className="text-gray-500 text-[15px]">
+                    {ticket.qty} x Rp {train.price}
+                  </p>
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-right sm:text-center ">
+                    Total : Rp {ticket.Total_price}
+                  </h5>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <>Loading</>
+          )}
 
           <p className="mt-3 mb-2 text-gray-700 font-bold">
             Upload Bukti Pembayaran
