@@ -1,12 +1,20 @@
 import { Link } from "react-router-dom";
 
-const ModalFinishPayment = ({ showModal, setShowModal }) => {
+const ModalFinishPayment = ({
+  showModal,
+  setShowModal,
+  isUpload,
+  handlePayment,
+}) => {
   return (
     <div>
       <button
-        className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
-        onClick={() => setShowModal(true)}
+        disabled={isUpload ? false : true}
+        className={`${
+          isUpload ? "bg-gray-900" : "bg-gray-300"
+        }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
+        type="submit"
+        onClick={(event) => handlePayment(event)}
       >
         Bayar Sekarang
       </button>
@@ -19,11 +27,6 @@ const ModalFinishPayment = ({ showModal, setShowModal }) => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-2xl font-semibold">Pembayaran</h3>
-                  <button onClick={() => setShowModal(false)}>
-                    <span className=" text-gray-500 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      x
-                    </span>
-                  </button>
                 </div>
                 {/*body*/}
                 <div className="relative flex-auto border-b">

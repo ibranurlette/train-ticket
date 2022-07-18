@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 
 import { getUsers } from "../client/_action/user";
 import { getOneTicket } from "../client/_action/ticket";
+import { updatePayment } from "../client/_action/update_payment";
+import { uploadProof } from "../client/_action/upload";
 
 import ModalFinishPayment from "../modal-finish-payment";
 
@@ -14,6 +16,8 @@ const Payment = () => {
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState();
   const [train, setTrain] = useState();
+  const [file, setFile] = useState("");
+  const [isUpload, setIsUpload] = useState(false);
 
   useEffect(() => {
     dispatch(getUsers())
@@ -34,6 +38,39 @@ const Payment = () => {
         console.log("ERROR CARI DATA", err);
       });
   }, [dispatch, ticket.Train_id]);
+
+  const handlePayment = (event) => {
+    const data = {
+      id: ticket.id,
+      train: {
+        status: "menunggu disetujui",
+      },
+    };
+    event.preventDefault();
+
+    dispatch(updatePayment(data))
+      .then(async (res) => {
+        console.log("haloo there");
+        setShowModal(true);
+        // navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log("ERROR PAYMENT", err);
+      });
+  };
+  const handleUpload = (event, file) => {
+    const formData = new FormData();
+    formData.append("payment", file);
+
+    event.preventDefault();
+    dispatch(uploadProof(formData, ticket.id))
+      .then(async (res) => {
+        setIsUpload(true);
+      })
+      .catch((err) => {
+        console.log("ERROR CARI DATA", err);
+      });
+  };
 
   return (
     <div className="w-[100%] max-w-4xl mx-auto">
@@ -149,12 +186,31 @@ const Payment = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="bukti_pembayaran"
                 type="file"
+                name="file"
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
               />
             </div>
-            <div>
+
+            <div className="flex justify-start">
+              <button
+                className={`${
+                  isUpload ? "bg-gray-300" : "bg-gray-900"
+                }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
+                type="submit"
+                disabled={isUpload ? true : false}
+                onClick={(e) => {
+                  handleUpload(e, file);
+                }}
+              >
+                Upload
+              </button>
               <ModalFinishPayment
                 showModal={showModal}
                 setShowModal={setShowModal}
+                isUpload={isUpload}
+                handlePayment={handlePayment}
               />
             </div>
           </div>
