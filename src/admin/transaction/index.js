@@ -1,4 +1,21 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { getPayment } from "../../client/_action/payment";
 const Transaction = () => {
+  const dispatch = useDispatch();
+  const [transaction, setTransaction] = useState();
+
+  useEffect(() => {
+    dispatch(getPayment())
+      .then(async (res) => {
+        setTransaction(res.value);
+      })
+      .catch((err) => {
+        console.log("ERROR CARI DATA", err);
+      });
+  }, [dispatch]);
+
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
@@ -82,46 +99,64 @@ const Transaction = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                    <p className="text-gray-900 whitespace-no-wrap">1</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                    <p className="text-gray-900 whitespace-no-wrap">
-                      Vera Carpenter
-                    </p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                    <p className="text-gray-900 whitespace-no-wrap">
-                      Jayakarta
-                    </p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                    <p className="text-gray-900 whitespace-no-wrap">Bukti</p>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                    <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                      <span
-                        aria-hidden
-                        className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                      ></span>
-                      <span className="relative">Menunggu Pembayaran</span>
-                    </span>
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                    <button className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                      Setujui
-                    </button>
-                    <button className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                      Detail
-                    </button>
-                    <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+              {!transaction ? (
+                <>Loading</>
+              ) : (
+                transaction.map((item, index) => (
+                  <tbody>
+                    <tr>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {index + 1}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {item.user.name}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {item.train.nameTrain}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        {item.attachment ? (
+                          <img
+                            src={require(`../../assets/${item.attachment}`)}
+                            alt="bukti-transaction"
+                            className="rounded"
+                          />
+                        ) : (
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            Belum Ada Bukti
+                          </p>
+                        )}
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                          <span
+                            aria-hidden
+                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                          ></span>
+                          <span className="relative">{item.status}</span>
+                        </span>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <button className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                          Setujui
+                        </button>
+                        <button className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                          Detail
+                        </button>
+                        <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                          Hapus
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
+              )}
             </table>
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
               <span className="text-xs xs: text-gray-900">
