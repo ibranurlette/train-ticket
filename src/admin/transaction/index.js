@@ -17,20 +17,21 @@ const Transaction = () => {
   const [idTransaction, setIdTransaction] = useState("");
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     setPages(Math.ceil(transaction ? transaction.length / 5 : 1));
   }, [transaction]);
 
   useEffect(() => {
-    dispatch(getPayment())
+    dispatch(getPayment(search))
       .then(async (res) => {
         setTransaction(res.value);
       })
       .catch((err) => {
         console.log("ERROR CARI DATA", err);
       });
-  }, [dispatch]);
+  }, [dispatch, search]);
 
   const handleEdit = () => {
     const data = {
@@ -128,6 +129,7 @@ const Transaction = () => {
               </svg>
             </span>
             <input
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="Search"
               className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
             />
