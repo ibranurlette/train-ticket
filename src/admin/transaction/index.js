@@ -15,6 +15,12 @@ const Transaction = () => {
     modalDetail: false,
   });
   const [idTransaction, setIdTransaction] = useState("");
+  const [pages, setPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setPages(Math.ceil(transaction ? transaction.length / 5 : 1));
+  }, [transaction]);
 
   useEffect(() => {
     dispatch(getPayment())
@@ -43,6 +49,31 @@ const Transaction = () => {
       });
   };
 
+  function goToNextPage() {
+    setCurrentPage((page) => page + 1);
+  }
+
+  function goToPreviousPage() {
+    setCurrentPage((page) => page - 1);
+  }
+
+  function changePage(event) {
+    const pageNumber = Number(event.target.textContent);
+    setCurrentPage(pageNumber);
+  }
+
+  const getPaginatedData = () => {
+    console.log("tess");
+    const startIndex = currentPage * 5 - 5;
+    const endIndex = startIndex + 5;
+    return transaction && transaction.slice(startIndex, endIndex);
+  };
+
+  const getPaginationGroup = () => {
+    let start = Math.floor((currentPage - 1) / 3) * 3;
+    return new Array(pages).fill().map((_, idx) => start + idx + 1);
+  };
+
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
@@ -52,7 +83,7 @@ const Transaction = () => {
           </h2>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
-          <div className="flex flex-row mb-1 sm:mb-0">
+          {/* <div className="flex flex-row mb-1 sm:mb-0">
             <div className="relative">
               <select className="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option>5</option>
@@ -71,7 +102,8 @@ const Transaction = () => {
             </div>
             <div className="relative">
               <select className="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                <option>All</option>
+                <option>Pilih</option>
+                <option>Semua</option>
                 <option>Active</option>
                 <option>Inactive</option>
               </select>
@@ -85,7 +117,7 @@ const Transaction = () => {
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="block relative">
             <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
               <svg
@@ -130,7 +162,7 @@ const Transaction = () => {
                 {!transaction ? (
                   <>Loading</>
                 ) : (
-                  transaction.map((item, index) => (
+                  getPaginatedData().map((item, index) => (
                     <tr key={index}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
@@ -199,10 +231,37 @@ const Transaction = () => {
                 Showing 1 to 4 of 50 Entries
               </span>
               <div className="inline-flex mt-2 xs:mt-0">
-                <button className=" bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                  Prev
+                <button
+                  onClick={goToPreviousPage}
+                  disabled={currentPage === 1 ? true : false}
+                  type="submit"
+                  className={`${
+                    currentPage === 1 ? "bg-gray-200" : "bg-gray-300"
+                  } text-gray-800 font-semibold py-2 px-4 rounded-r`}
+                >
+                  Preve
                 </button>
-                <button className=" bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                {getPaginationGroup().map((item, index) => (
+                  <>
+                    <button
+                      className={`${
+                        currentPage === item ? "bg-blue-500" : null
+                      } rounded`}
+                      key={index}
+                      onClick={changePage}
+                    >
+                      <span className="px-5">{item}</span>
+                    </button>
+                  </>
+                ))}
+                <button
+                  disabled={currentPage === pages ? true : false}
+                  type="submit"
+                  onClick={goToNextPage}
+                  className={`${
+                    currentPage === pages ? "bg-gray-200" : "bg-gray-300"
+                  } text-gray-800 font-semibold py-2 px-4 rounded-l`}
+                >
                   Next
                 </button>
               </div>

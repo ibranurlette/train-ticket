@@ -157,10 +157,10 @@ const Order = () => {
         ))}
 
         <button
-          disabled={currentPage === pages ? true : false}
           className={`${
             currentPage === pages ? "bg-gray-300" : "bg-gray-900"
           }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
+          disabled={currentPage === pages ? true : false}
           type="submit"
           onClick={goToNextPage}
         >
