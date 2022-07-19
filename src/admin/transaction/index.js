@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { getPayment } from "../../client/_action/payment";
+import { updatePayment } from "../../client/_action/update_payment";
+import ModalEdit from "./edit";
 const Transaction = () => {
   const dispatch = useDispatch();
   const [transaction, setTransaction] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [idTransaction, setIdTransaction] = useState("");
 
   useEffect(() => {
     dispatch(getPayment())
@@ -15,6 +19,23 @@ const Transaction = () => {
         console.log("ERROR CARI DATA", err);
       });
   }, [dispatch]);
+
+  const handleEdit = () => {
+    const data = {
+      idTransaction,
+      train: {
+        status: "disepakati",
+      },
+    };
+
+    dispatch(updatePayment(data))
+      .then(async (res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log("ERROR PAYMENT", err);
+      });
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -99,12 +120,12 @@ const Transaction = () => {
                   </th>
                 </tr>
               </thead>
-              {!transaction ? (
-                <>Loading</>
-              ) : (
-                transaction.map((item, index) => (
-                  <tbody>
-                    <tr>
+              <tbody>
+                {!transaction ? (
+                  <>Loading</>
+                ) : (
+                  transaction.map((item, index) => (
+                    <tr key={index}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {index + 1}
@@ -142,10 +163,14 @@ const Transaction = () => {
                           <span className="relative">{item.status}</span>
                         </span>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <button className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                          Setujui
-                        </button>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white flex ">
+                        <ModalEdit
+                          setIdTransaction={setIdTransaction}
+                          id={item.id}
+                          setShowModal={setShowModal}
+                          showModal={showModal}
+                          handleEdit={handleEdit}
+                        />
                         <button className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
                           Detail
                         </button>
@@ -154,10 +179,11 @@ const Transaction = () => {
                         </button>
                       </td>
                     </tr>
-                  </tbody>
-                ))
-              )}
+                  ))
+                )}
+              </tbody>
             </table>
+
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
               <span className="text-xs xs: text-gray-900">
                 Showing 1 to 4 of 50 Entries
