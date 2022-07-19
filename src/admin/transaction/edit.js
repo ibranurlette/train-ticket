@@ -11,13 +11,13 @@ const ModalEdit = ({
         className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
         type="submit"
         onClick={() => {
-          setShowModal(true);
+          setShowModal({ ...showModal, modalEdit: true });
           setIdTransaction(id);
         }}
       >
         Setujui
       </button>
-      {showModal ? (
+      {showModal.modalEdit ? (
         <>
           <div className="bg-transparent mx-2 justify-center fade items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -44,7 +44,9 @@ const ModalEdit = ({
                   <button
                     className="text-green-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() =>
+                      setShowModal({ ...showModal, modalEdit: false })
+                    }
                   >
                     Tutup
                   </button>

@@ -3,6 +3,7 @@ export const AUTH_RELOAD = "AUTH_RELOAD";
 export const GET_MYTICKET = "GET_MYTICKET";
 export const GET_ONE_TICKET = "GET_ONE_TICKET";
 export const GET_PAYMENT = "GET_PAYMENT";
+export const DETAIL_PAYMENT = "DETAIL_PAYMENT";
 export const GET_USERS = "GET_USERS";
 export const TAMBAH_TRAIN = "TAMBAH_TRAIN";
 export const BELI_TICKET = "BELI_TICKET";
