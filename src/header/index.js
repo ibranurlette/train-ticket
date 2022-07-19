@@ -21,6 +21,9 @@ const Header = () => {
       <Link to="/transaction" className="mr-5">
         Transaksi
       </Link>
+      <Link to="/list-ticket" className="mr-5">
+        Ticket
+      </Link>
       <Link to="/order" className="mr-5">
         Order
       </Link>

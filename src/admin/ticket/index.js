@@ -1,54 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { getPayment } from "../../client/_action/payment";
-import { updatePayment } from "../../client/_action/update_payment";
+import { get_ticket } from "../../client/_action/cari_ticket";
 
 import ModalEdit from "./edit";
 import ModalDetail from "./detail";
 
-const Transaction = () => {
+const ListTicket = () => {
   const dispatch = useDispatch();
-  const [transaction, setTransaction] = useState();
-  const [showModal, setShowModal] = useState({
-    modalEdit: false,
-    modalDetail: false,
-  });
-  const [idTransaction, setIdTransaction] = useState("");
+  const [ticket, setTicket] = useState();
+  // const [showModal, setShowModal] = useState({
+  //   modalEdit: false,
+  //   modalDetail: false,
+  // });
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [search, setSearch] = useState("");
+
+  const [startStation, setStartStation] = useState("");
+  const [destination, setDestination] = useState("");
+  const [dateStart, setDateStart] = useState("");
 
   useEffect(() => {
-    setPages(Math.ceil(transaction ? transaction.length / 5 : 1));
-  }, [transaction]);
+    setPages(Math.ceil(ticket ? ticket.length / 5 : 1));
+  }, [ticket]);
 
   useEffect(() => {
-    dispatch(getPayment(search))
+    dispatch(get_ticket({ startStation, destination, dateStart }))
       .then(async (res) => {
-        setTransaction(res.value);
+        setTicket(res.value);
       })
       .catch((err) => {
         console.log("ERROR CARI DATA", err);
       });
-  }, [dispatch, search]);
-
-  const handleEdit = () => {
-    const data = {
-      idTransaction,
-      train: {
-        status: "disepakati",
-      },
-    };
-
-    dispatch(updatePayment(data))
-      .then(async (res) => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log("ERROR PAYMENT", err);
-      });
-  };
+  }, [dispatch, startStation, destination, dateStart]);
 
   function goToNextPage() {
     setCurrentPage((page) => page + 1);
@@ -67,7 +51,7 @@ const Transaction = () => {
     console.log("tess");
     const startIndex = currentPage * 5 - 5;
     const endIndex = startIndex + 5;
-    return transaction && transaction.slice(startIndex, endIndex);
+    return ticket && ticket.slice(startIndex, endIndex);
   };
 
   const getPaginationGroup = () => {
@@ -79,46 +63,9 @@ const Transaction = () => {
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
         <div>
-          <h2 className="text-2xl font-semibold leading-tight">
-            Semua Transaksi
-          </h2>
+          <h2 className="text-2xl font-semibold leading-tight">Semua Tiket</h2>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
-          {/* <div className="flex flex-row mb-1 sm:mb-0">
-            <div className="relative">
-              <select className="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                <option>5</option>
-                <option>10</option>
-                <option>20</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-            <div className="relative">
-              <select className="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                <option>Pilih</option>
-                <option>Semua</option>
-                <option>Active</option>
-                <option>Inactive</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-          </div> */}
           <div className="block relative">
             <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
               <svg
@@ -129,7 +76,7 @@ const Transaction = () => {
               </svg>
             </span>
             <input
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setStartStation(e.target.value)}
               placeholder="Search"
               className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
             />
@@ -144,16 +91,16 @@ const Transaction = () => {
                     Nomor
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Pemesan
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
                     Nama Kereta
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Bukti Pembayaran
+                    Stasiun Keberangkatan
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Status
+                    Tujuan Keberangkatan
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                    Waktu Sampai
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
                     Aksi
@@ -161,7 +108,7 @@ const Transaction = () => {
                 </tr>
               </thead>
               <tbody>
-                {!transaction ? (
+                {!ticket ? (
                   <>Loading</>
                 ) : (
                   getPaginatedData().map((item, index) => (
@@ -173,38 +120,30 @@ const Transaction = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {item.user.name}
+                          {item.nameTrain}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {item.train.nameTrain}
+                          {item.startStation}
+                        </p>
+                        <span>{item.startTime}</span>
+                      </td>
+
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {item.destination}
+                        </p>
+                        <span>{item.arrivalTime}</span>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          2j 0m
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        {item.attachment ? (
-                          <img
-                            src={require(`../../assets/${item.attachment}`)}
-                            alt="bukti-transaction"
-                            className="rounded"
-                          />
-                        ) : (
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            Belum Ada Bukti
-                          </p>
-                        )}
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                          <span
-                            aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                          ></span>
-                          <span className="relative">{item.status}</span>
-                        </span>
-                      </td>
+
                       <td className="px-5 py-5 border-b border-gray-200 bg-white flex ">
-                        <ModalEdit
+                        {/* <ModalEdit
                           setIdTransaction={setIdTransaction}
                           id={item.id}
                           setShowModal={setShowModal}
@@ -217,7 +156,7 @@ const Transaction = () => {
                           item={item}
                           setShowModal={setShowModal}
                           showModal={showModal}
-                        />
+                        /> */}
                       </td>
                     </tr>
                   ))
@@ -272,4 +211,4 @@ const Transaction = () => {
   );
 };
 
-export default Transaction;
+export default ListTicket;
