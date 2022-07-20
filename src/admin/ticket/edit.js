@@ -11,6 +11,7 @@ const EditTicket = () => {
 
   const { state } = useLocation();
   const ticket = state.ticket;
+  const [error, setError] = useState("");
 
   const [data, setData] = useState({
     nameTrain: ticket.nameTrain,
@@ -35,7 +36,7 @@ const EditTicket = () => {
         navigate("/list-ticket", { replace: true });
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        setError(err.response.data.message);
       });
   };
 
@@ -45,6 +46,18 @@ const EditTicket = () => {
         <label className="block text-gray-700 text-lg font-bold mb-5">
           Edit Tiket
         </label>
+        {error ? (
+          <div className="relative flex-auto border-b">
+            <div
+              className="bg-red-100 border-l-4 border-red-500 text-black-700 p-4"
+              role="alert"
+            >
+              <p>{error}</p>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="">
           <div>
             <div className="flex justify-between">

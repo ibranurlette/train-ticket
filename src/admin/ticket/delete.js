@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { deleteTicket } from "../../client/_action/ticket";
 
