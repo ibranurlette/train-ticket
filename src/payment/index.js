@@ -50,9 +50,7 @@ const Payment = () => {
 
     dispatch(updatePayment(data))
       .then(async (res) => {
-        console.log("haloo there");
         setShowModal(true);
-        // navigate("/", { replace: true });
       })
       .catch((err) => {
         console.log("ERROR PAYMENT", err);

@@ -12,6 +12,7 @@ import Order from "./order";
 import Transaction from "./admin/transaction";
 import CreateTicket from "./admin/createTicket";
 import ListTicket from "./admin/ticket";
+import EditTicket from "./admin/ticket/edit";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -36,6 +37,7 @@ function App() {
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/create-ticket" element={<CreateTicket />} />
         <Route path="/list-ticket" element={<ListTicket />} />
+        <Route path="/edit-ticket" element={<EditTicket />} />
         )}
       </Routes>
       <Footer />

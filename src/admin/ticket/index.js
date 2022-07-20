@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { get_ticket } from "../../client/_action/cari_ticket";
 
-import ModalEdit from "./edit";
 import ModalDetail from "./detail";
 
 const ListTicket = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [ticket, setTicket] = useState();
-  // const [showModal, setShowModal] = useState({
-  //   modalEdit: false,
-  //   modalDetail: false,
-  // });
+  const [showModal, setShowModal] = useState({
+    // modalEdit: false,
+    modalDetail: false,
+  });
+
+  const [idTicket, setIdTicket] = useState();
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -48,7 +51,6 @@ const ListTicket = () => {
   }
 
   const getPaginatedData = () => {
-    console.log("tess");
     const startIndex = currentPage * 5 - 5;
     const endIndex = startIndex + 5;
     return ticket && ticket.slice(startIndex, endIndex);
@@ -57,6 +59,12 @@ const ListTicket = () => {
   const getPaginationGroup = () => {
     let start = Math.floor((currentPage - 1) / 3) * 3;
     return new Array(pages).fill().map((_, idx) => start + idx + 1);
+  };
+
+  const handleNavigate = (item) => {
+    navigate("/edit-ticket", {
+      state: { ticket: item },
+    });
   };
 
   return (
@@ -100,19 +108,19 @@ const ListTicket = () => {
                     Tujuan Keberangkatan
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Waktu Sampai
+                    Waktu Perjalanan
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
                     Aksi
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {!ticket ? (
-                  <>Loading</>
-                ) : (
-                  getPaginatedData().map((item, index) => (
-                    <tr key={index}>
+              {!ticket ? (
+                <>Loading</>
+              ) : (
+                getPaginatedData().map((item, index) => (
+                  <tbody key={index}>
+                    <tr>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {index + 1}
@@ -142,26 +150,28 @@ const ListTicket = () => {
                         </p>
                       </td>
 
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white flex ">
-                        {/* <ModalEdit
-                          setIdTransaction={setIdTransaction}
-                          id={item.id}
-                          setShowModal={setShowModal}
-                          showModal={showModal}
-                          handleEdit={handleEdit}
-                        />
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                        <button
+                          className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
+                          type="submit"
+                          onClick={() => {
+                            handleNavigate(item);
+                          }}
+                        >
+                          Edit
+                        </button>
                         <ModalDetail
-                          setIdTransaction={setIdTransaction}
-                          idTransaction={idTransaction}
+                          setIdTicket={setIdTicket}
+                          idTicket={idTicket}
                           item={item}
                           setShowModal={setShowModal}
                           showModal={showModal}
-                        /> */}
+                        />
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
+                  </tbody>
+                ))
+              )}
             </table>
 
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
