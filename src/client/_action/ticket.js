@@ -3,6 +3,7 @@ import {
   GET_MYTICKET,
   GET_ONE_TICKET,
   UPDATE_TICKET,
+  DELETE_TICKET,
 } from "../config/constants";
 import { API } from "../config/api";
 
@@ -34,6 +35,17 @@ export const updateTicket = (ticket) => {
     type: UPDATE_TICKET,
     payload: async () => {
       const res = await API.put(`/ticket/${id}`, data2);
+      const data = res.data.data;
+      return data;
+    },
+  };
+};
+
+export const deleteTicket = (id) => {
+  return {
+    type: DELETE_TICKET,
+    payload: async () => {
+      const res = await API.delete(`/ticket/${id}`);
       const data = res.data.data;
       return data;
     },

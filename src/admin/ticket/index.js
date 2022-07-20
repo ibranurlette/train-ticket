@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { get_ticket } from "../../client/_action/cari_ticket";
 
 import ModalDetail from "./detail";
+import ModalDelete from "./delete";
 
 const ListTicket = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState();
   const [showModal, setShowModal] = useState({
-    // modalEdit: false,
+    modalDelete: false,
     modalDetail: false,
   });
 
@@ -161,6 +162,13 @@ const ListTicket = () => {
                           Edit
                         </button>
                         <ModalDetail
+                          setIdTicket={setIdTicket}
+                          idTicket={idTicket}
+                          item={item}
+                          setShowModal={setShowModal}
+                          showModal={showModal}
+                        />
+                        <ModalDelete
                           setIdTicket={setIdTicket}
                           idTicket={idTicket}
                           item={item}
