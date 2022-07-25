@@ -3,15 +3,17 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Tambah_train } from "../../client/_action/tambah_train";
-
 import { getUsers } from "../../client/_action/user";
+import { getListTrain } from "../../client/_action/list_train";
+import { getListStation } from "../../client/_action/list_station";
 
 const CreateTicket = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState();
   const [error, setError] = useState("");
-
+  const [listTrain, setListTrain] = useState([]);
+  const [listStation, setListStation] = useState([]);
   const [data, setData] = useState({
     nameTrain: "",
     dateStart: "",
@@ -32,11 +34,9 @@ const CreateTicket = () => {
         setUser(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA");
+        console.log("ERROR GET USER");
       });
   }, [dispatch]);
-
-  console.log("user", user);
 
   const handleCreate = (event) => {
     event.preventDefault();
@@ -48,6 +48,26 @@ const CreateTicket = () => {
         setError(err.response.data.message);
       });
   };
+
+  useEffect(() => {
+    dispatch(getListTrain())
+      .then(async (res) => {
+        setListTrain(res.value);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getListStation())
+      .then(async (res) => {
+        setListStation(res.value);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  }, [dispatch]);
 
   return (
     <div className="mx-auto my-5">
@@ -77,16 +97,36 @@ const CreateTicket = () => {
                 >
                   Nama Kereta
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name-train"
-                  type="text"
-                  value={data.nameTrain}
-                  onChange={(e) => {
-                    setData({ ...data, nameTrain: e.target.value });
-                  }}
-                  placeholder="Nama Kereta"
-                />
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="name-train"
+                    value={data.nameTrain}
+                    onChange={(e) => {
+                      setData({ ...data, nameTrain: e.target.value });
+                    }}
+                  >
+                    <option value="">Pilih</option>
+                    {listTrain.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listTrain.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="mb-6">
                 <label
@@ -106,8 +146,8 @@ const CreateTicket = () => {
                   >
                     <option value="">Pilih</option>
                     <option value="1">Eksekutif</option>
-                    <option value="2">Ekonomi</option>
-                    <option value="3">Bisnis</option>
+                    <option value="2">Bisnis</option>
+                    <option value="3">Ekonomi</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg
@@ -146,16 +186,37 @@ const CreateTicket = () => {
                 >
                   Stasiun Keberangkatan
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="start-station"
-                  type="text"
-                  value={data.startStation}
-                  onChange={(e) => {
-                    setData({ ...data, startStation: e.target.value });
-                  }}
-                  placeholder="Stasiun Keberangkatan"
-                />
+
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="name-train"
+                    value={data.startStation}
+                    onChange={(e) => {
+                      setData({ ...data, startStation: e.target.value });
+                    }}
+                  >
+                    <option value="">Pilih</option>
+                    {listStation.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listStation.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <div className="mb-6">
@@ -165,16 +226,36 @@ const CreateTicket = () => {
                 >
                   Stasiun Tujuan
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="end-station"
-                  type="text"
-                  value={data.destination}
-                  onChange={(e) => {
-                    setData({ ...data, destination: e.target.value });
-                  }}
-                  placeholder="Stasiun Tujuan"
-                />
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="name-train"
+                    value={data.destination}
+                    onChange={(e) => {
+                      setData({ ...data, destination: e.target.value });
+                    }}
+                  >
+                    <option value="">Pilih</option>
+                    {listStation.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listStation.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -258,7 +339,7 @@ const CreateTicket = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="qty"
               >
-                Stok pembelian (1)
+                Minimal pembelian (1)
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"

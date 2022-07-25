@@ -9,19 +9,20 @@ const ModalDetail = ({
   setIdTransaction,
   idTransaction,
   item,
+  transaction,
 }) => {
   const dispatch = useDispatch();
   const [detail, setDetail] = useState();
 
   useEffect(() => {
-    dispatch(detailPayment(idTransaction))
+    dispatch(detailPayment(!idTransaction ? transaction[0].id : idTransaction))
       .then(async (res) => {
         setDetail(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR DETAIL TRANSACTION", err);
       });
-  }, [dispatch, idTransaction]);
+  }, [dispatch, idTransaction, transaction]);
 
   return (
     <div>
@@ -51,7 +52,7 @@ const ModalDetail = ({
                     <div className="border-b pb-2">
                       <div>
                         <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white ">
-                          {detail.train.nameTrain}
+                          {detail.train.train_name.name}
                         </h5>
                         <p className="text-gray-500 text-[15px] sm:mb-4">
                           {detail.train.typeTrain.name}
@@ -63,7 +64,7 @@ const ModalDetail = ({
                             {detail.train.startTime}
                           </h5>
                           <p className="text-gray-500 text-[15px]">
-                            {detail.train.startStation}
+                            {detail.train.start_station.name}
                           </p>
                         </div>
 
@@ -81,7 +82,7 @@ const ModalDetail = ({
                             {detail.train.arrivalTime}
                           </h5>
                           <p className="text-gray-500 text-[15px]">
-                            {detail.train.destination}
+                            {detail.train.destina_tion.name}
                           </p>
                         </div>
                       </div>
@@ -96,7 +97,7 @@ const ModalDetail = ({
                     </div>
                     <div className="mt-4">
                       <p className="text-gray-900 text-[15px] font-semibold">
-                        Menunggu Pembayaran
+                        {item.status}
                       </p>
                     </div>
                   </div>

@@ -11,20 +11,21 @@ const Order = () => {
 
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setPages(Math.round(order ? order.length / 5 : 1));
+    setPages(Math.ceil(order ? order.length / 5 : 1));
   }, [order]);
 
   useEffect(() => {
-    dispatch(getPayment())
+    dispatch(getPayment(search))
       .then(async (res) => {
         setOrder(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR GET LIST ORDER", err);
       });
-  }, [dispatch]);
+  }, [dispatch, search]);
 
   const handlebuy = (item) => {
     navigate("/payment", {
@@ -59,6 +60,24 @@ const Order = () => {
   return (
     <div className="sm:w-[20rem] md:w-[50rem] mx-auto sm:mt-5">
       <p className="mb-2 text-gray-700 font-bold">Daftar Pesanan Kamu</p>
+
+      <div className="my-2 flex sm:flex-row flex-col">
+        <div className="block relative">
+          <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4 fill-current text-gray-500"
+            >
+              <path d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"></path>
+            </svg>
+          </span>
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search"
+            className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+          />
+        </div>
+      </div>
       {!order ? (
         <>Loading</>
       ) : (
@@ -70,7 +89,7 @@ const Order = () => {
             <div className="md:flex md:justify-around border-b pb-2">
               <div>
                 <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center md:text-left">
-                  {item.train.nameTrain}
+                  {item.train.train_name.name}
                 </h5>
                 <p className="text-gray-500 text-[15px] sm:text-center md:text-left sm:mb-4 md:mb-0">
                   {item.train.typeTrain.name}
@@ -82,7 +101,7 @@ const Order = () => {
                     {item.train.startTime}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
-                    {item.train.startStation}
+                    {item.train.start_station.name}
                   </p>
                 </div>
 
@@ -100,7 +119,7 @@ const Order = () => {
                     {item.train.arrivalTime}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
-                    {item.train.destination}
+                    {item.train.destina_tion.name}
                   </p>
                 </div>
               </div>
@@ -113,9 +132,9 @@ const Order = () => {
                 </h5>
               </div>
             </div>
-            <div className="md:ml-14 mt-2 sm:text-center md:text-left">
+            <div className="md:ml-10 mt-2 sm:text-center md:text-left">
               <p className="text-gray-900 text-[15px] font-semibold mb-2">
-                Menunggu Pembayaran
+                {item.status}
               </p>
               <button
                 className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

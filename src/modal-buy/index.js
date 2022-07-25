@@ -47,14 +47,12 @@ const ModalBuy = ({
       })
     )
       .then(async (res) => {
-        console.log("response", res.value);
         navigate("/payment", {
           state: { ticket: res.value },
         });
       })
       .catch((err) => {
-        console.log("THE ERRORO", err);
-        // setError(err.response.data.message);
+        console.log("ERROR BUY TICKET", err);
       });
   };
 
@@ -92,7 +90,7 @@ const ModalBuy = ({
                     <div className="flex justify-start">
                       <div>
                         <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
-                          {item.nameTrain}
+                          {item.train_name.name}
                         </h5>
                         <p className="text-gray-500 font-semibold text-[14px]">
                           {item.typeTrain.name}
@@ -123,14 +121,14 @@ const ModalBuy = ({
                           Jakarta
                         </h5>
                         <p className="text-gray-500 font-semibold text-[14px]">
-                          {item.startStation}
+                          {item.start_station.name}
                         </p>
 
                         <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
                           Yogyakarta
                         </h5>
                         <p className="text-gray-500 font-semibold text-[14px]">
-                          {item.destination}
+                          {item.destina_tion.name}
                         </p>
                       </div>
                     </div>

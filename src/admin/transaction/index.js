@@ -29,13 +29,13 @@ const Transaction = () => {
         setTransaction(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR GET ALL TRANSACTION", err);
       });
   }, [dispatch, search]);
 
   const handleEdit = () => {
     const data = {
-      idTransaction,
+      id: idTransaction,
       train: {
         status: "disepakati",
       },
@@ -46,7 +46,7 @@ const Transaction = () => {
         window.location.reload();
       })
       .catch((err) => {
-        console.log("ERROR PAYMENT", err);
+        console.log("ERROR UPDATE TRANSACTION", err);
       });
   };
 
@@ -64,7 +64,6 @@ const Transaction = () => {
   }
 
   const getPaginatedData = () => {
-    console.log("tess");
     const startIndex = currentPage * 5 - 5;
     const endIndex = startIndex + 5;
     return transaction && transaction.slice(startIndex, endIndex);
@@ -74,6 +73,8 @@ const Transaction = () => {
     let start = Math.floor((currentPage - 1) / 3) * 3;
     return new Array(pages).fill().map((_, idx) => start + idx + 1);
   };
+
+  console.log("transaction", transaction);
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -211,12 +212,14 @@ const Transaction = () => {
                           showModal={showModal}
                           handleEdit={handleEdit}
                         />
+                        {console.log("idTransaction2", idTransaction)}
                         <ModalDetail
                           setIdTransaction={setIdTransaction}
                           idTransaction={idTransaction}
                           item={item}
                           setShowModal={setShowModal}
                           showModal={showModal}
+                          transaction={transaction}
                         />
                       </td>
                     </tr>

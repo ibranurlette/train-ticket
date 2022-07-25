@@ -19,7 +19,7 @@ const ModalDetail = ({
         setDetail(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR GET DETAIL TICKET", err);
       });
   }, [dispatch, idTicket]);
 
@@ -51,7 +51,7 @@ const ModalDetail = ({
                     <div className="">
                       <div>
                         <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white ">
-                          {detail.nameTrain}
+                          {detail.train_name.name}
                         </h5>
                         <p className="text-gray-500 text-[15px] sm:mb-4">
                           {detail.typeTrain.name}
@@ -63,7 +63,7 @@ const ModalDetail = ({
                             {detail.startTime}
                           </h5>
                           <p className="text-gray-500 text-[15px]">
-                            {detail.startStation}
+                            {detail.start_station.name}
                           </p>
                         </div>
 
@@ -81,7 +81,7 @@ const ModalDetail = ({
                             {detail.arrivalTime}
                           </h5>
                           <p className="text-gray-500 text-[15px]">
-                            {detail.destination}
+                            {detail.destina_tion.name}
                           </p>
                         </div>
                       </div>

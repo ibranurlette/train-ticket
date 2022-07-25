@@ -34,7 +34,7 @@ const ListTicket = () => {
         setTicket(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR GET LIST TICKET", err);
       });
   }, [dispatch, startStation, destination, dateStart]);
 
@@ -129,19 +129,19 @@ const ListTicket = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {item.nameTrain}
+                          {item.train_name.name}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {item.startStation}
+                          {item.start_station.name}
                         </p>
                         <span>{item.startTime}</span>
                       </td>
 
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {item.destination}
+                          {item.destina_tion.name}
                         </p>
                         <span>{item.arrivalTime}</span>
                       </td>

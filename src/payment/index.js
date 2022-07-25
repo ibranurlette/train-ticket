@@ -25,7 +25,7 @@ const Payment = () => {
         setUser(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR GET USER", err);
       });
   }, [dispatch]);
 
@@ -35,7 +35,7 @@ const Payment = () => {
         setTrain(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR GET DETAIL PAYMENT", err);
       });
   }, [dispatch, ticket.Train_id]);
 
@@ -47,13 +47,12 @@ const Payment = () => {
       },
     };
     event.preventDefault();
-
     dispatch(updatePayment(data))
       .then(async (res) => {
         setShowModal(true);
       })
       .catch((err) => {
-        console.log("ERROR PAYMENT", err);
+        console.log("ERROR UPDATE PAYMENT", err);
       });
   };
   const handleUpload = (event, file) => {
@@ -66,7 +65,7 @@ const Payment = () => {
         setIsUpload(true);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR UPLOAD PROOF PAYMENT", err);
       });
   };
 
@@ -129,7 +128,7 @@ const Payment = () => {
               <div className="lg:flex md:justify-around">
                 <div>
                   <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
-                    {train.nameTrain}
+                    {train.train_name.name}
                   </h5>
                   <p className="text-gray-500 text-[15px] sm:text-center md:text-left sm:mb-4 md:mb-0">
                     {train.typeTrain.name}
@@ -141,7 +140,7 @@ const Payment = () => {
                       {train.startTime}
                     </h5>
                     <p className="text-gray-500 text-[15px]">
-                      {train.startStation}
+                      {train.start_station.name}
                     </p>
                   </div>
 
@@ -156,16 +155,16 @@ const Payment = () => {
                       {train.arrivalTime}
                     </h5>
                     <p className="text-gray-500 text-[15px]">
-                      {train.destination}
+                      {train.destina_tion.name}
                     </p>
                   </div>
                 </div>
 
-                <div className="sm:mt-2 md:mt-0">
+                <div className="sm:mt-2 md:mt-0 md:text-right sm:text-center">
                   <p className="text-gray-500 text-[15px]">
                     {ticket.qty} x Rp {train.price}
                   </p>
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-right sm:text-center ">
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white ">
                     Total : Rp {ticket.Total_price}
                   </h5>
                 </div>

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import ModalBuy from "../modal-buy";
 
 import { get_ticket } from "../client/_action/cari_ticket";
+import { getListStation } from "../client/_action/list_station";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,12 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [dataTicket, setDataTicket] = useState([]);
   const [fetch, setFetch] = useState(false);
+  const [listStation, setListStation] = useState([]);
+  // const [focused, setFocused] = React.useState(false);
+  // const onFocus = () => setFocused(true);
+  // const onBlur = () => setFocused(false);
 
-  const [startStation, setStartStation] = useState("");
+  const [startStation, setStartStation] = useState();
   const [destination, setDestination] = useState("");
   const [dateStart, setDateStart] = useState("");
   const [seeDetail, setSeeDetail] = useState();
@@ -26,9 +31,19 @@ const Home = () => {
         setDataTicket(res.value);
       })
       .catch((err) => {
-        console.log("ERROR CARI DATA", err);
+        console.log("ERROR SEARCH TICKET", err);
       });
   };
+
+  useEffect(() => {
+    dispatch(getListStation())
+      .then(async (res) => {
+        setListStation(res.value);
+      })
+      .catch((err) => {
+        console.log("ERROR GET LIST STATION", err);
+      });
+  }, [dispatch]);
 
   return (
     <div className="mb-auto">
@@ -67,18 +82,41 @@ const Home = () => {
                 >
                   Asal
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="asal"
-                  type="start-station"
-                  name="start-station"
-                  value={startStation}
-                  onChange={(e) => {
-                    setStartStation(e.target.value);
-                  }}
-                  placeholder="Asal"
-                />
+
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state"
+                    name="start-station"
+                    onChange={(e) => {
+                      setStartStation(e.target.value);
+                    }}
+                    value={startStation}
+                  >
+                    <option value="">Pilih</option>
+                    {listStation.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listStation.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
+
               <div className="mb-6">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -102,25 +140,46 @@ const Home = () => {
               <div className="mb-6">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="tujuan"
+                  htmlFor="destination"
                 >
                   Tujuan
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="destination"
-                  type="text"
-                  name="destination"
-                  value={destination}
-                  onChange={(e) => {
-                    setDestination(e.target.value);
-                  }}
-                  placeholder="Tujuan"
-                />
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state"
+                    name="destination"
+                    onChange={(e) => {
+                      setDestination(e.target.value);
+                    }}
+                    value={destination}
+                  >
+                    <option value="">Pilih</option>
+                    {listStation.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listStation.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <button
-                className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-gray-800 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 onClick={handlSearch}
                 disabled={
@@ -149,7 +208,7 @@ const Home = () => {
             <div className="md:flex md:justify-around">
               <div>
                 <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
-                  {item.nameTrain}
+                  {item.train_name.name}
                 </h5>
                 <p className="text-gray-500 text-[15px]">
                   {item.typeTrain.name}
@@ -161,7 +220,7 @@ const Home = () => {
                     {item.startTime}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
-                    {item.startStation}
+                    {item.start_station.name}
                   </p>
                 </div>
 
@@ -178,7 +237,7 @@ const Home = () => {
                     {item.arrivalTime}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
-                    {item.destination}
+                    {item.destina_tion.name}
                   </p>
                 </div>
               </div>
@@ -225,7 +284,7 @@ const Home = () => {
                 <div className="flex justify-start mt-5">
                   <div>
                     <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
-                      {item.nameTrain}
+                      {item.train_name.name}
                     </h5>
                     <p className="text-gray-500 font-semibold text-[14px]">
                       {item.typeTrain.name}
@@ -253,14 +312,14 @@ const Home = () => {
                       Jakarta
                     </h5>
                     <p className="text-gray-500 font-semibold text-[14px]">
-                      {item.startStation}
+                      {item.start_station.name}
                     </p>
 
                     <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
                       Yogyakarta
                     </h5>
                     <p className="text-gray-500 font-semibold text-[14px]">
-                      {item.destination}
+                      {item.destina_tion.name}
                     </p>
                   </div>
                 </div>

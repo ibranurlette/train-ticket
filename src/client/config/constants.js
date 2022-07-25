@@ -14,3 +14,5 @@ export const GET_TICKET = "GET_TICKET";
 export const DELETE_PAYMENT = "DELETE_PAYMENT";
 export const UPDATE_PAYMENT = "UPDATE_PAYMENT";
 export const UPLOAD_PROOF = "UPLOAD_PROOF";
+export const LIST_STATION = "LIST_STATION";
+export const LIST_TRAIN = "LIST_TRAIN";
