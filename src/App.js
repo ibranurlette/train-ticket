@@ -3,11 +3,11 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 
 import Home from "./home";
-import Header from "./header";
-import Footer from "./footer";
-import Login from "./login";
-import Register from "./register";
-import Payment from "./payment";
+import Header from "./global/header";
+import Footer from "./global/footer";
+import Login from "./auth/login";
+import Register from "./auth/register";
+import Payment from "./payments/payment";
 import Order from "./order";
 import Transaction from "./admin/transaction";
 import CreateTicket from "./admin/createTicket";

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { getUsers } from "../client/_action/user";
-import { getOneTicket } from "../client/_action/ticket";
-import { updatePayment } from "../client/_action/update_payment";
-import { uploadProof } from "../client/_action/upload";
+import { getUsers } from "../../client/_action/user";
+import { getOneTicket } from "../../client/_action/ticket";
+import { updatePayment } from "../../client/_action/update_payment";
+import { uploadProof } from "../../client/_action/upload";
 
 import ModalFinishPayment from "../modal-finish-payment";
 

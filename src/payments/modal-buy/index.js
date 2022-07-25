@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Beli_ticket } from "../client/_action/beli_ticket";
+import { Beli_ticket } from "../../client/_action/beli_ticket";
 
 const ModalBuy = ({
   showModal,

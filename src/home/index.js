@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import ModalBuy from "../modal-buy";
+import ModalBuy from "../payments/modal-buy";
 
 import { get_ticket } from "../client/_action/cari_ticket";
 import { getListStation } from "../client/_action/list_station";

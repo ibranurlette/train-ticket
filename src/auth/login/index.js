@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { login } from "../client/_action/auth";
+import { login } from "../../client/_action/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
