@@ -1,20 +1,32 @@
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { getUsers } from "../../client/_action/user";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+  const [user, setUser] = useState();
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.reload();
     navigate("/", { replace: true });
   };
 
-  const RouteAlreadyLogin = () => (
+  useEffect(() => {
+    dispatch(getUsers())
+      .then(async (res) => {
+        setUser(res.value);
+      })
+      .catch((err) => {
+        console.log("ERROR GET USER", err);
+      });
+  }, [dispatch, token]);
+
+  const RouteAdmin = () => (
     <>
-      <Link to="/" className="mr-5">
-        Home
-      </Link>
       <Link to="/create-ticket" className="mr-5">
         Buat Tiket
       </Link>
@@ -24,20 +36,36 @@ const Header = () => {
       <Link to="/list-ticket" className="mr-5">
         Ticket
       </Link>
-      <Link to="/order" className="mr-5">
-        Order
-      </Link>
-      {token && (
-        <Link to="/" className="mr-5" onClick={handleLogout}>
-          Keluar
-        </Link>
-      )}
     </>
   );
 
-  const AllRoute = () => (
+  const RouteTokenExist = () =>
+    token && (
+      <>
+        {user && user.status === "1" ? (
+          <RouteAdmin />
+        ) : (
+          <>
+            <Link to="/" className="mr-5">
+              Home
+            </Link>
+            <Link to="/order" className="mr-5">
+              Order
+            </Link>
+          </>
+        )}
+
+        <Link to="/" className="mr-5" onClick={handleLogout}>
+          Keluar
+        </Link>
+      </>
+    );
+
+  const RouteTokenNotExist = () => (
     <>
-      <RouteAlreadyLogin />
+      <Link to="/" className="mr-5">
+        Home
+      </Link>
       <Link to="/login" className="mr-5">
         Masuk
       </Link>
@@ -49,7 +77,7 @@ const Header = () => {
     <div className="w-full bg-gray-800	text-white p-5 md:flex md:justify-between items-center mx-auto">
       <h1 className="text-2xl font-bold sm:mb-2 md:mb-0">Ticket Train</h1>
       <div className="font-bold">
-        {token ? <RouteAlreadyLogin /> : <AllRoute />}
+        {!token ? <RouteTokenNotExist /> : <RouteTokenExist />}
       </div>
     </div>
   );

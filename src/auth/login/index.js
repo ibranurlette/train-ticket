@@ -14,7 +14,9 @@ const Login = () => {
   const handleLogin = () => {
     dispatch(login({ username, password }))
       .then(async (res) => {
-        navigate("/", { replace: true });
+        res.value.status === "1"
+          ? navigate("/transaction", { replace: true })
+          : navigate("/", { replace: true });
       })
       .catch((err) => {
         setError(err.response.data.message);

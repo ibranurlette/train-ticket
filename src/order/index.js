@@ -162,17 +162,13 @@ const Order = () => {
         </button>
 
         {getPaginationGroup().map((item, index) => (
-          <>
-            <button
-              className={`${
-                currentPage === item ? "bg-blue-500" : null
-              } rounded`}
-              key={index}
-              onClick={changePage}
-            >
-              <span className="px-5">{item}</span>
-            </button>
-          </>
+          <button
+            key={index}
+            className={`${currentPage === item ? "bg-blue-500" : null} rounded`}
+            onClick={changePage}
+          >
+            <span className="px-5">{item}</span>
+          </button>
         ))}
 
         <button
