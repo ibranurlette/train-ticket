@@ -4,15 +4,18 @@ const ModalFinishPayment = ({
   showModal,
   setShowModal,
   isUpload,
+  attachment,
   handlePayment,
 }) => {
   return (
     <div>
       <button
-        disabled={isUpload ? false : true}
+        disabled={isUpload || attachment ? false : true}
         className={`${
-          isUpload ? "bg-gray-900" : "bg-gray-300"
-        }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
+          isUpload || attachment
+            ? "active:bg-emerald-600 bg-gray-900"
+            : "bg-gray-300"
+        }  text-white  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
         type="submit"
         onClick={(event) => handlePayment(event)}
       >

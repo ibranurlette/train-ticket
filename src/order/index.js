@@ -136,15 +136,18 @@ const Order = () => {
               <p className="text-gray-900 text-[15px] font-semibold mb-2">
                 {item.status}
               </p>
-              <button
-                className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="submit"
-                onClick={() => {
-                  handlebuy(item);
-                }}
-              >
-                Bayar Sekarang
-              </button>
+              {item.status !== "menunggu disetujui" && (
+                <button
+                  className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="submit"
+                  onClick={() => {
+                    console.log("item", item);
+                    handlebuy(item);
+                  }}
+                >
+                  Bayar Sekarang
+                </button>
+              )}
             </div>
           </div>
         ))

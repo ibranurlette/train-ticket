@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-
+import { Link } from "react-router-dom";
 import ModalBuy from "../payments/modal-buy";
 
 import { get_ticket } from "../client/_action/cari_ticket";
@@ -24,7 +24,8 @@ const Home = () => {
   const [dateStart, setDateStart] = useState("");
   const [seeDetail, setSeeDetail] = useState();
 
-  const handlSearch = () => {
+  const handlSearch = (event) => {
+    event.preventDefault();
     dispatch(get_ticket({ startStation, destination, dateStart }))
       .then(async (res) => {
         setFetch(true);
@@ -56,7 +57,7 @@ const Home = () => {
             <>
               <h1 className="font-medium">Daftar Sekarang!!</h1>
               <button className="bg-gray-800 text-white px-5 py-2 rounded mt-2 font-bold">
-                Daftar
+                <Link to="register">Daftar</Link>
               </button>
             </>
           )}
@@ -179,9 +180,11 @@ const Home = () => {
               </div>
 
               <button
-                className="bg-gray-800 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-                onClick={handlSearch}
+                className="bg-gray-800 mt-5 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+                onClick={(e) => {
+                  handlSearch(e);
+                }}
                 disabled={
                   startStation === "" || destination === "" || dateStart === ""
                     ? true

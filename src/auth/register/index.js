@@ -31,7 +31,7 @@ const Register = () => {
   return (
     <div className="mx-auto w-96 my-5">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8">
-        <label className="block text-gray-700 text-lg font-bold mb-5">
+        <label className="block text-gray-700 text-center text-lg font-bold mb-5">
           Halaman Register
         </label>
         {error ? (
@@ -48,79 +48,86 @@ const Register = () => {
         )}
         <div className="">
           <div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="name"
-              >
-                Name
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={(e) => {
-                  setForm({ ...form, name: e.target.value });
-                }}
-                placeholder="Name"
-              />
+            <div className="flex justify-between">
+              <div className="mb-6 mr-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={(e) => {
+                    setForm({ ...form, name: e.target.value });
+                  }}
+                  placeholder="Name"
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="username"
+                >
+                  Username
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="username"
+                  type="text"
+                  name="username"
+                  value={form.username}
+                  onChange={(e) => {
+                    setForm({ ...form, username: e.target.value });
+                  }}
+                  placeholder="Username"
+                />
+              </div>
             </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="username"
-              >
-                Username
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                name="username"
-                value={form.username}
-                onChange={(e) => {
-                  setForm({ ...form, username: e.target.value });
-                }}
-                placeholder="Username"
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="email"
-              >
-                Email
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={(e) => {
-                  setForm({ ...form, email: e.target.value });
-                }}
-                placeholder="Email"
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                placeholder="******************"
-              />
+
+            <div className="flex justify-between">
+              <div className="mb-6 mr-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={(e) => {
+                    setForm({ ...form, email: e.target.value });
+                  }}
+                  placeholder="Email"
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="password"
+                >
+                  Password
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                  placeholder="******************"
+                />
+              </div>
             </div>
 
             <div className="mb-6">
@@ -152,6 +159,7 @@ const Register = () => {
                 </div>
               </div>
             </div>
+
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -176,10 +184,9 @@ const Register = () => {
               >
                 Alamat
               </label>
-              <input
+              <textarea
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="addres"
-                type="text"
                 name="addres"
                 value={form.addres}
                 onChange={(e) => setForm({ ...form, addres: e.target.value })}
