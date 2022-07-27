@@ -7,14 +7,14 @@ import { getPayment } from "../client/_action/payment";
 const Order = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState([]);
 
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setPages(Math.ceil(order ? order.length / 5 : 1));
+    setPages(Math.ceil(order.length === 0 ? 1 : order.length / 5));
   }, [order]);
 
   useEffect(() => {
@@ -78,8 +78,10 @@ const Order = () => {
           />
         </div>
       </div>
-      {!order ? (
-        <>Loading</>
+      {order.length === 0 ? (
+        <div className="my-5 font-bold text-center border py-4 text-lg">
+          Belum Ada Tiket Yang Kamu Order
+        </div>
       ) : (
         getPaginatedData().map((item, index) => (
           <div

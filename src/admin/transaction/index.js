@@ -6,6 +6,7 @@ import { updatePayment } from "../../client/_action/update_payment";
 
 import ModalEdit from "./edit";
 import ModalDetail from "./detail";
+import ModalImage from "./modal_image";
 
 const Transaction = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Transaction = () => {
   const [showModal, setShowModal] = useState({
     modalEdit: false,
     modalDetail: false,
+    modalImage: false,
   });
   const [idTransaction, setIdTransaction] = useState("");
   const [pages, setPages] = useState(1);
@@ -37,7 +39,7 @@ const Transaction = () => {
     const data = {
       id: idTransaction,
       train: {
-        status: "disepakati",
+        status: "disetujui",
       },
     };
 
@@ -73,8 +75,6 @@ const Transaction = () => {
     let start = Math.floor((currentPage - 1) / 3) * 3;
     return new Array(pages).fill().map((_, idx) => start + idx + 1);
   };
-
-  console.log("transaction", transaction);
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -179,40 +179,48 @@ const Transaction = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {item.train.nameTrain}
+                          {item.train.train_name.name}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white ">
                         {item.attachment ? (
-                          <img
-                            src={require(`../../assets/${item.attachment}`)}
-                            alt="bukti-transaction"
-                            className="rounded"
+                          <ModalImage
+                            showModal={showModal}
+                            setIdTransaction={setIdTransaction}
+                            idTransaction={idTransaction}
+                            item={item}
+                            transaction={transaction}
+                            setShowModal={setShowModal}
                           />
                         ) : (
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            Belum Ada Bukti
-                          </p>
+                          <p className="text-gray-900">Belum Ada Bukti</p>
                         )}
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white  ">
                         <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                           <span
                             aria-hidden
-                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                            className={`${
+                              item.status === "pending"
+                                ? "bg-yellow-400"
+                                : item.status === "menunggu disetujui"
+                                ? "bg-sky-400"
+                                : "bg-emerald-400"
+                            } absolute inset-0 opacity-50 rounded`}
                           ></span>
                           <span className="relative">{item.status}</span>
                         </span>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white flex ">
-                        <ModalEdit
-                          setIdTransaction={setIdTransaction}
-                          id={item.id}
-                          setShowModal={setShowModal}
-                          showModal={showModal}
-                          handleEdit={handleEdit}
-                        />
-                        {console.log("idTransaction2", idTransaction)}
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white">
+                        {item.status === "menunggu disetujui" && (
+                          <ModalEdit
+                            setIdTransaction={setIdTransaction}
+                            id={item.id}
+                            setShowModal={setShowModal}
+                            showModal={showModal}
+                            handleEdit={handleEdit}
+                          />
+                        )}
                         <ModalDetail
                           setIdTransaction={setIdTransaction}
                           idTransaction={idTransaction}

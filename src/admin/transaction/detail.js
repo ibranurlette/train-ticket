@@ -27,7 +27,7 @@ const ModalDetail = ({
   return (
     <div>
       <button
-        className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
+        className="bg-sky-400 w-28 hover:bg-sky-500 text-gray-800 font-semibold py-2 px-4 rounded"
         type="submit"
         onClick={() => {
           setShowModal({ ...showModal, modalDetail: true });
@@ -96,9 +96,19 @@ const ModalDetail = ({
                       </div>
                     </div>
                     <div className="mt-4">
-                      <p className="text-gray-900 text-[15px] font-semibold">
-                        {item.status}
-                      </p>
+                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        <span
+                          aria-hidden
+                          className={`${
+                            detail.status === "pending"
+                              ? "bg-yellow-400"
+                              : detail.status === "menunggu disetujui"
+                              ? "bg-sky-400"
+                              : "bg-emerald-400"
+                          } absolute inset-0 opacity-50 rounded`}
+                        ></span>
+                        <span className="relative">{detail.status}</span>
+                      </span>
                     </div>
                   </div>
                 </div>

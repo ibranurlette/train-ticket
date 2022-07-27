@@ -8,7 +8,7 @@ const ModalEdit = ({
   return (
     <div>
       <button
-        className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
+        className="bg-emerald-400 mb-2 w-28 hover:bg-emerald-500 text-gray-800  font-semibold py-2 px-4 rounded"
         type="submit"
         onClick={() => {
           setShowModal({ ...showModal, modalEdit: true });
