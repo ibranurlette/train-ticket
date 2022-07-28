@@ -4,6 +4,7 @@ import {
   GET_ONE_TICKET,
   UPDATE_TICKET,
   DELETE_TICKET,
+  GET_TICKET,
 } from "../config/constants";
 import { API } from "../config/api";
 
@@ -47,6 +48,19 @@ export const deleteTicket = (id) => {
     payload: async () => {
       const res = await API.delete(`/ticket/${id}`);
       const data = res.data.data;
+      return data;
+    },
+  };
+};
+
+export const get_ticket = ({ startStation, destination, dateStart }) => {
+  return {
+    type: GET_TICKET,
+    payload: async () => {
+      const res = await API.get(
+        `/tickets?startStation=${startStation}&destination=${destination}&dateStart=${dateStart}`
+      );
+      const data = res.data;
       return data;
     },
   };

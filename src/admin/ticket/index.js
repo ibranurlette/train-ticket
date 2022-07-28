@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { get_ticket } from "../../client/_action/cari_ticket";
+import { get_ticket } from "../../client/_action/ticket";
 
 import ModalDetail from "./detail";
 import ModalDelete from "./delete";

@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { updateTicket } from "../../client/_action/ticket";
-import { getListTrain } from "../../client/_action/list_train";
-import { getListStation } from "../../client/_action/list_station";
+import { getListTrain } from "../../client/_action/train";
+import { getListStation } from "../../client/_action/train";
 
 const EditTicket = () => {
   const dispatch = useDispatch();

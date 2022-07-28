@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Tambah_train } from "../../client/_action/tambah_train";
+import { Tambah_train } from "../../client/_action/train";
 import { getUsers } from "../../client/_action/user";
-import { getListTrain } from "../../client/_action/list_train";
-import { getListStation } from "../../client/_action/list_station";
+import { getListTrain } from "../../client/_action/train";
+import { getListStation } from "../../client/_action/train";
 
 const CreateTicket = () => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { getPayment } from "../../client/_action/payment";
-import { updatePayment } from "../../client/_action/update_payment";
+import { updatePayment } from "../../client/_action/payment";
 
 import ModalEdit from "./edit";
 import ModalDetail from "./detail";

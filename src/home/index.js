@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ModalBuy from "../payments/modal-buy";
 
-import { get_ticket } from "../client/_action/cari_ticket";
-import { getListStation } from "../client/_action/list_station";
+import { get_ticket } from "../client/_action/ticket";
+import { getListStation } from "../client/_action/train";
 
 const Home = () => {
   const dispatch = useDispatch();

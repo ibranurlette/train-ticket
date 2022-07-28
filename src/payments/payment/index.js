@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 
 import { getUsers } from "../../client/_action/user";
 import { getOneTicket } from "../../client/_action/ticket";
-import { updatePayment } from "../../client/_action/update_payment";
-import { uploadProof } from "../../client/_action/upload";
+import { updatePayment } from "../../client/_action/payment";
+import { uploadProof } from "../../client/_action/payment";
 
 import ModalFinishPayment from "../modal-finish-payment";
 
