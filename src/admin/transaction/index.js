@@ -212,6 +212,14 @@ const Transaction = () => {
                         </span>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white">
+                        <ModalDetail
+                          setIdTransaction={setIdTransaction}
+                          idTransaction={idTransaction}
+                          item={item}
+                          setShowModal={setShowModal}
+                          showModal={showModal}
+                          transaction={transaction}
+                        />
                         {item.status === "menunggu disetujui" && (
                           <ModalEdit
                             setIdTransaction={setIdTransaction}
@@ -221,14 +229,6 @@ const Transaction = () => {
                             handleEdit={handleEdit}
                           />
                         )}
-                        <ModalDetail
-                          setIdTransaction={setIdTransaction}
-                          idTransaction={idTransaction}
-                          item={item}
-                          setShowModal={setShowModal}
-                          showModal={showModal}
-                          transaction={transaction}
-                        />
                       </td>
                     </tr>
                   ))

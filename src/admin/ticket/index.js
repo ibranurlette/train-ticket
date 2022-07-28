@@ -151,16 +151,7 @@ const ListTicket = () => {
                         </p>
                       </td>
 
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <button
-                          className="bg-gray-300 md:mr-2 sm:mb-2 md:mb-0 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
-                          type="submit"
-                          onClick={() => {
-                            handleNavigate(item);
-                          }}
-                        >
-                          Edit
-                        </button>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white">
                         <ModalDetail
                           setIdTicket={setIdTicket}
                           idTicket={idTicket}
@@ -168,6 +159,28 @@ const ListTicket = () => {
                           setShowModal={setShowModal}
                           showModal={showModal}
                         />
+
+                        <button
+                          className=""
+                          type="submit"
+                          onClick={() => {
+                            handleNavigate(item);
+                          }}
+                        >
+                          <svg
+                            className="h-5 w-5 text-green-700"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                            <path
+                              fill-rule="evenodd"
+                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </button>
+
                         <ModalDelete
                           setIdTicket={setIdTicket}
                           idTicket={idTicket}
