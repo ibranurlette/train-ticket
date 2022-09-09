@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import { getPayment } from "../client/_action/payment";
 
@@ -12,6 +13,8 @@ const Order = () => {
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [showTicket, setShowTicket] = useState(false);
+  const [seeDetail, setSeeDetail] = useState();
 
   useEffect(() => {
     setPages(Math.ceil(order.length === 0 ? 1 : order.length / 5));
@@ -83,75 +86,182 @@ const Order = () => {
           Belum Ada Tiket Yang Kamu Order
         </div>
       ) : (
-        getPaginatedData().map((item, index) => (
-          <div
-            key={index}
-            className="border border-blue-700 shadow-md rounded-lg py-2  mb-5"
-          >
-            <div className="md:flex md:justify-around border-b border-blue-700 pb-2">
-              <div>
-                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center md:text-left">
-                  {item.train.train_name.name}
-                </h5>
-                <p className="text-gray-500 text-[15px] sm:text-center md:text-left sm:mb-4 md:mb-0">
-                  {item.train.typeTrain.name}
-                </p>
-              </div>
-              <div className="md:flex md:justify-between text-center">
-                <div className="md:mr-5">
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                    {item.train.startTime}
-                  </h5>
-                  <p className="text-gray-500 text-[15px]">
-                    {item.train.start_station.name}
-                  </p>
-                </div>
+        getPaginatedData().map((item, index) => {
+          let startTime = moment(item.train.startTime, "hh:mm:ss");
+          let arrivalTime = moment(item.train.arrivalTime, "hh:mm:ss");
+          const duration = moment.duration(arrivalTime.diff(startTime));
+          const hours = parseInt(Math.abs(duration.asHours()));
+          const minutes = parseInt(duration.asMinutes()) % 60;
 
-                <div className="md:flex md:mr-5 sm:my-2 md:my-0">
-                  <div className="h-0.5 bg-gray-300 md:w-5 sm:w-1 sm:h-5 md:h-1 md:mt-7 sm:mt-2 mx-auto" />
-                  <p className="text-gray-500 text-[15px] mt-4 mx-2">
-                    {/* {item.duration} */}
-                    2j 0m
-                  </p>
-                  <div className="h-0.5 bg-gray-300 md:w-5 sm:w-1 sm:h-5 md:h-1 md:mt-7 sm:mt-2 mx-auto" />
-                </div>
+          const dateStart = moment(item.train.dateStart).format("DD MMMM YYYY");
+          const dateEndTravel = moment(item.train.dateEndTravel).format(
+            "DD MMMM YYYY"
+          );
 
+          console.log("ITEMMMMMMMM", item);
+
+          return (
+            <div
+              key={index}
+              className="mb-5 p-6 bg-white rounded-lg border border-blue-700 rounded shadow-md dark:bg-gray-800 dark:border-gray-700"
+            >
+              <div className="md:flex md:justify-around">
                 <div>
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                    {item.train.arrivalTime}
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                    {item.train.train_name.name}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
-                    {item.train.destina_tion.name}
+                    {item.train.typeTrain.name}
                   </p>
                 </div>
+                <div className="flex justify-between">
+                  <div className="mr-5">
+                    <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item.train.startTime}
+                    </h5>
+                    <p className="text-gray-500 text-[15px]">
+                      {item.train.start_station.name}
+                    </p>
+                  </div>
+
+                  <div className="text-gray-700 items-center mr-5 mt-5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                      />
+                    </svg>
+                  </div>
+
+                  <div>
+                    <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item.train.arrivalTime}
+                    </h5>
+                    <p className="text-gray-500 text-[15px]">
+                      {item.train.destina_tion.name}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="md:flex md:mr-5 sm:text-center">
+                  <div className="md:h-10 md:bg-gray-300 md:w-0.5 md:mt-2" />
+                  <p className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mt-3 md:mx-2">
+                    {hours}j {minutes}m
+                  </p>
+                </div>
+
+                <div className="sm:mt-2 items-center	sm:border-t md:border-none sm:pt-4 md:pt-0">
+                  <h5 className="text-sm text-gray-900 md:mb-2">
+                    {item.qty} x Rp {item.train.price} :
+                  </h5>
+                  <h5 className="text-lg font-bold text-gray-900 mb-2">
+                    Rp {item.Total_price}
+                  </h5>
+                  {item.status !== "menunggu disetujui" && (
+                    <button
+                      className="sm:w-full bg-blue-700 text-white font-bold text-sm py-2 md:px-4 rounded shadow hover:shadow-lg"
+                      type="submit"
+                      onClick={() => {
+                        console.log("item", item);
+                        handlebuy(item);
+                      }}
+                    >
+                      Bayar Sekarang
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="sm:mt-2 md:mt-0">
-                <p className="text-gray-500 text-[15px]">
-                  {item.qty} x Rp {item.train.price}
-                </p>
-                <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-right sm:text-center ">
-                  Total : Rp {item.Total_price}
-                </h5>
-              </div>
-            </div>
-            <div className="md:ml-10 mt-2 sm:text-center md:text-left">
-              <p className="font-semibold mb-2">{item.status}</p>
-              {item.status !== "menunggu disetujui" && (
+              {/* Main modal */}
+
+              <div className="mt-5 text-center ">
                 <button
-                  className="bg-blue-700 text-white font-bold text-sm px-4 py-2 rounded shadow hover:shadow-lg"
-                  type="submit"
                   onClick={() => {
-                    console.log("item", item);
-                    handlebuy(item);
+                    setShowTicket(!showTicket);
+                    setSeeDetail(getPaginatedData()[index]);
                   }}
                 >
-                  Bayar Sekarang
+                  <p className="text-[15px] text-gray-900 mb-2 font-semibold">
+                    Lihat Detail Perjalanan
+                  </p>
                 </button>
+                {showTicket && seeDetail.id === item.id ? (
+                  <div className="h-1 w-28 bg-gray-900 mx-auto" />
+                ) : (
+                  <></>
+                )}
+              </div>
+
+              {showTicket && seeDetail.id === item.id ? (
+                <div>
+                  <div className="h-px bg-gray-300" />
+                  <div className="lg:flex lg:justify-start mt-5">
+                    <div className="sm:text-center lg:text-left lg:mr-16 ">
+                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                        {item.train.train_name.name}
+                      </h5>
+                      <p className="text-gray-500 font-semibold text-[14px]">
+                        {item.train.typeTrain.name}
+                      </p>
+                    </div>
+                    <div className="sm:flex sm:justify-center">
+                      <div className="mr-5 mt-2">
+                        <div className="w-3 h-3 rounded-full  border border-sky-500" />
+                        <div className="w-px h-16 ml-1 my-1 border-dashed border border-gray-500" />
+                        <div className="w-3 h-3 rounded-full  bg-sky-500" />
+                      </div>
+                      <div>
+                        <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-24">
+                          {item.train.startTime}
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {dateStart}
+                        </p>
+                        <p className="text-gray-500 text-[14px] my-2">
+                          {hours}j {minutes}m
+                        </p>
+
+                        <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                          {item.train.arrivalTime}
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {dateEndTravel}
+                        </p>
+                      </div>
+
+                      <div>
+                        <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
+                          Jakarta
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {item.train.start_station.name}
+                        </p>
+
+                        <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
+                          Yogyakarta
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {item.train.destina_tion.name}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <></>
               )}
             </div>
-          </div>
-        ))
+          );
+        })
       )}
+
       <div className="flex justify-center mb-5">
         <button
           className={`${

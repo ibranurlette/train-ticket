@@ -223,6 +223,7 @@ const Home = () => {
           const dateEndTravel = moment(item.dateEndTravel).format(
             "DD MMMM YYYY"
           );
+
           return (
             <div
               key={index}
@@ -274,15 +275,15 @@ const Home = () => {
                   </div>
                 </div>
 
-                <div className="flex mr-5">
-                  <div className="h-10 bg-gray-300 w-0.5 mt-2" />
-                  <p className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mt-3 mx-2">
+                <div className="md:flex md:mr-5 sm:text-center">
+                  <div className="md:h-10 md:bg-gray-300 md:w-0.5 md:mt-2" />
+                  <p className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mt-3 md:mx-2">
                     {hours}j {minutes}m
                   </p>
                 </div>
 
-                <div className="sm:mt-2">
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mb-2">
+                <div className="sm:mt-2 grid sm:grid-cols-2 md:grid-cols-1 items-center	sm:border-t md:border-none sm:pt-4 md:pt-0">
+                  <h5 className="text-lg font-bold text-gray-900 dark:text-white md:mb-2">
                     Rp {item.price}
                   </h5>
                   <ModalBuy
@@ -329,7 +330,7 @@ const Home = () => {
                         {item.typeTrain.name}
                       </p>
                     </div>
-                    <div className="sm:flex sm:justify-start">
+                    <div className="sm:flex sm:justify-center">
                       <div className="mr-5 mt-2">
                         <div className="w-3 h-3 rounded-full  border border-sky-500" />
                         <div className="w-px h-16 ml-1 my-1 border-dashed border border-gray-500" />
@@ -342,7 +343,9 @@ const Home = () => {
                         <p className="text-gray-500 font-semibold text-[14px]">
                           {dateStart}
                         </p>
-                        <p className="text-gray-500 text-[14px] my-2">8j 13m</p>
+                        <p className="text-gray-500 text-[14px] my-2">
+                          {hours}j {minutes}m
+                        </p>
 
                         <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
                           {item.arrivalTime}

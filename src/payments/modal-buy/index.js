@@ -81,17 +81,17 @@ const ModalBuy = ({
       </button>
       {showModal && seeDetail.id === item.id ? (
         <>
-          <div className="mx-2 justify-center fade items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="mx-2 justify-center fade items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none ">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded shadow-lg relative flex flex-col w-full bg-white outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
                     {token ? "Beli Tiket" : "Peringatan"}
                   </h3>
                   <button onClick={() => setShowModal(false)}>
-                    <span className="text-red-500 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    <span className="text-red-500 h-6 w-6 text-2xl block outline-none">
                       x
                     </span>
                   </button>
@@ -100,16 +100,16 @@ const ModalBuy = ({
                 <div className="relative p-6 flex-auto border-b">
                   <div>
                     {token ? (
-                      <div className="lg:flex lg:justify-start">
-                        <div>
-                          <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-10">
+                      <div className="md:flex md:justify-start">
+                        <div className="sm:text-center md:text-left">
+                          <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white md:mr-10">
                             {item.train_name.name}
                           </h5>
                           <p className="text-gray-500 font-semibold text-[14px]">
                             {item.typeTrain.name}
                           </p>
                         </div>
-                        <div className="sm:flex sm:justify-start">
+                        <div className="sm:flex sm:justify-center">
                           <div className="mr-5 mt-2">
                             <div className="w-3 h-3 rounded-full  border border-blue-600" />
                             <div className="w-px h-16 ml-1 my-1 border-dashed border border-gray-500" />
@@ -172,7 +172,7 @@ const ModalBuy = ({
                       </button>
 
                       <input
-                        className="shadow border border-blue-700 rounded py-2 mx-2 text-blue-700 leading-snug text-center"
+                        className="shadow border border-blue-700 rounded py-2 mx-2 text-blue-700 leading-snug text-center w-20"
                         id="qty"
                         type="number"
                         placeholder="1"

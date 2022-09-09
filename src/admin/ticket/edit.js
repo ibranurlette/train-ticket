@@ -95,7 +95,7 @@ const EditTicket = () => {
 
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded  focus:outline-none focus:bg-white focus:border-gray-500"
                     id="name-train"
                     value={data.nameTrain}
                     onChange={(e) => {
@@ -132,7 +132,7 @@ const EditTicket = () => {
                 </label>
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded  focus:outline-none focus:bg-white focus:border-gray-500"
                     id="type-train"
                     value={data.typeTrain_id}
                     onChange={(e) => {
@@ -164,7 +164,7 @@ const EditTicket = () => {
                 Tanggal Keberangkatan
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
                 id="start-date-time"
                 type="date"
                 value={data.dateStart}
@@ -184,7 +184,7 @@ const EditTicket = () => {
 
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded  focus:outline-none focus:bg-white focus:border-gray-500"
                     id="name-train"
                     value={data.startStation}
                     onChange={(e) => {
@@ -223,7 +223,7 @@ const EditTicket = () => {
 
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded  focus:outline-none focus:bg-white focus:border-gray-500"
                     id="name-train"
                     value={data.destination}
                     onChange={(e) => {
@@ -262,7 +262,7 @@ const EditTicket = () => {
                   Jam Keberangkatan
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
                   id="start-time"
                   type="time"
                   value={data.startTime}
@@ -280,7 +280,7 @@ const EditTicket = () => {
                   Jam Tiba
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
                   id="end-time"
                   type="time"
                   value={data.arrivalTime}
@@ -300,7 +300,7 @@ const EditTicket = () => {
                   Harga Tiket (Rp)
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
                   id="price-ticket"
                   type="number"
                   value={data.price}
@@ -317,7 +317,7 @@ const EditTicket = () => {
                   Stok Tersedia
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
                   id="qty"
                   type="number"
                   value={data.totalQty}
@@ -328,7 +328,7 @@ const EditTicket = () => {
               </div>
             </div>
             <button
-              className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-700 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               type="submit"
               onClick={(e) => handleEdit(e)}
             >

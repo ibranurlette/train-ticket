@@ -13,8 +13,8 @@ const ModalFinishPayment = ({
         disabled={isUpload || attachment ? false : true}
         className={`${
           isUpload || attachment
-            ? "active:bg-emerald-600 bg-gray-900"
-            : "bg-gray-300"
+            ? "active:bg-emerald-600 bg-blue-700"
+            : "bg-blue-300"
         }  text-white  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
         type="submit"
         onClick={(event) => handlePayment(event)}
