@@ -48,6 +48,8 @@ const Home = () => {
       });
   }, [dispatch]);
 
+  console.log("listStation", listStation);
+
   return (
     <div className="mb-auto">
       <div className="bg-gray-100	lg:flex lg:justify-around grid justify-items-center items-center text-center py-7">
@@ -58,7 +60,7 @@ const Home = () => {
           ) : (
             <>
               <h1 className="font-medium">Daftar Sekarang!!</h1>
-              <button className="bg-gray-800 text-white px-5 py-2 rounded mt-2 font-bold">
+              <button className="bg-blue-700 text-white px-5 py-2 rounded mt-2 font-bold">
                 <Link to="register">Daftar</Link>
               </button>
             </>
@@ -71,8 +73,8 @@ const Home = () => {
         />
       </div>
 
-      <div className="w-[100%] max-w-2xl mx-auto">
-        <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+      <div className="w-[100%] max-w-2xl mx-auto ">
+        <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 ">
           <label className="block text-gray-700 text-lg font-bold mb-5">
             Cari Tiket Kereta Kamu
           </label>
@@ -182,7 +184,11 @@ const Home = () => {
               </div>
 
               <button
-                className="bg-gray-800 mt-5 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className={`${
+                  startStation === "" || destination === "" || dateStart === ""
+                    ? "w-full bg-blue-400"
+                    : "w-full bg-blue-700 focus:outline-none focus:shadow-outline"
+                } mt-5 text-white font-bold py-2 px-4 rounded`}
                 type="submit"
                 onClick={(e) => {
                   handlSearch(e);
@@ -210,12 +216,17 @@ const Home = () => {
           let startTime = moment(item.startTime, "hh:mm:ss");
           let arrivalTime = moment(item.arrivalTime, "hh:mm:ss");
           const duration = moment.duration(arrivalTime.diff(startTime));
-          const hours = parseInt(duration.asHours());
+          const hours = parseInt(Math.abs(duration.asHours()));
           const minutes = parseInt(duration.asMinutes()) % 60;
+
+          const dateStart = moment(item.dateStart).format("DD MMMM YYYY");
+          const dateEndTravel = moment(item.dateEndTravel).format(
+            "DD MMMM YYYY"
+          );
           return (
             <div
               key={index}
-              className="mx-auto mb-5 p-6 max-w-3xl bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+              className="mx-auto mb-5 p-6 max-w-3xl bg-white rounded-lg border border-blue-700 rounded shadow-md dark:bg-gray-800 dark:border-gray-700"
             >
               <div className="md:flex md:justify-around">
                 <div>
@@ -236,12 +247,21 @@ const Home = () => {
                     </p>
                   </div>
 
-                  <div className="flex mr-5">
-                    <div className="h-0.5 bg-gray-300 w-5 mt-7" />
-                    <p className="text-gray-500 text-[15px] mt-4 mx-2">
-                      {hours} Jam {minutes} Menit
-                    </p>
-                    <div className="h-0.5 bg-gray-300 w-5 mt-7" />
+                  <div className="text-gray-700 items-center mr-5 mt-5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                      />
+                    </svg>
                   </div>
 
                   <div>
@@ -254,8 +274,15 @@ const Home = () => {
                   </div>
                 </div>
 
+                <div className="flex mr-5">
+                  <div className="h-10 bg-gray-300 w-0.5 mt-2" />
+                  <p className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mt-3 mx-2">
+                    {hours}j {minutes}m
+                  </p>
+                </div>
+
                 <div className="sm:mt-2">
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white text-right">
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white mb-2">
                     Rp {item.price}
                   </h5>
                   <ModalBuy
@@ -279,8 +306,8 @@ const Home = () => {
                     setSeeDetail(dataTicket[index]);
                   }}
                 >
-                  <p className="text-[15px] text-gray-900 mb-2">
-                    Detail Perjalanan
+                  <p className="text-[15px] text-gray-900 mb-2 font-semibold">
+                    Lihat Detail Perjalanan
                   </p>
                 </button>
                 {showTicket && seeDetail.id === item.id ? (
@@ -293,46 +320,53 @@ const Home = () => {
               {showTicket && seeDetail.id === item.id ? (
                 <div>
                   <div className="h-px bg-gray-300" />
-                  <div className="flex justify-start mt-5">
-                    <div>
-                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-16">
+                  <div className="lg:flex lg:justify-start mt-5">
+                    <div className="sm:text-center lg:text-left lg:mr-16 ">
+                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
                         {item.train_name.name}
                       </h5>
                       <p className="text-gray-500 font-semibold text-[14px]">
                         {item.typeTrain.name}
                       </p>
                     </div>
-                    <div>
-                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-24">
-                        {item.startTIme}
-                      </h5>
-                      <p className="text-gray-500 font-semibold text-[14px]">
-                        {item.dateStart}
-                      </p>
-                      <p className="text-gray-500 text-[14px] my-2">8j 13m</p>
+                    <div className="sm:flex sm:justify-start">
+                      <div className="mr-5 mt-2">
+                        <div className="w-3 h-3 rounded-full  border border-sky-500" />
+                        <div className="w-px h-16 ml-1 my-1 border-dashed border border-gray-500" />
+                        <div className="w-3 h-3 rounded-full  bg-sky-500" />
+                      </div>
+                      <div>
+                        <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white mr-24">
+                          {item.startTime}
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {dateStart}
+                        </p>
+                        <p className="text-gray-500 text-[14px] my-2">8j 13m</p>
 
-                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
-                        {item.arrivalTime}
-                      </h5>
-                      <p className="text-gray-500 font-semibold text-[14px]">
-                        11 Juli 2022
-                      </p>
-                    </div>
+                        <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                          {item.arrivalTime}
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {dateEndTravel}
+                        </p>
+                      </div>
 
-                    <div>
-                      <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
-                        Jakarta
-                      </h5>
-                      <p className="text-gray-500 font-semibold text-[14px]">
-                        {item.start_station.name}
-                      </p>
+                      <div>
+                        <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
+                          Jakarta
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {item.start_station.name}
+                        </p>
 
-                      <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
-                        Yogyakarta
-                      </h5>
-                      <p className="text-gray-500 font-semibold text-[14px]">
-                        {item.destina_tion.name}
-                      </p>
+                        <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white mt-9">
+                          Yogyakarta
+                        </h5>
+                        <p className="text-gray-500 font-semibold text-[14px]">
+                          {item.destina_tion.name}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

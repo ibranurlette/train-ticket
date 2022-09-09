@@ -4,6 +4,7 @@ import {
   LIST_TRAIN,
   TAMBAH_TRAIN,
   GET_TYPE_TRAIN,
+  LIST_TOWN,
 } from "../config/constants";
 import { API } from "../config/api";
 
@@ -45,6 +46,16 @@ export const getType_train = () => {
     type: GET_TYPE_TRAIN,
     payload: async () => {
       const res = await API.get("/type_train");
+      const { data } = res.data;
+      return data;
+    },
+  };
+};
+export const getListTown = () => {
+  return {
+    type: LIST_TOWN,
+    payload: async () => {
+      const res = await API.get("/list_town");
       const { data } = res.data;
       return data;
     },

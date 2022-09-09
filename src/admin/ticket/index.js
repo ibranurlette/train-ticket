@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import { get_ticket } from "../../client/_action/ticket";
 
@@ -69,7 +70,7 @@ const ListTicket = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-8">
+    <div className="container mx-auto px-4 sm:px-8 lg:grid h-screen place-items-center">
       <div className="py-8">
         <div>
           <h2 className="text-2xl font-semibold leading-tight">Semua Tiket</h2>
@@ -92,110 +93,105 @@ const ListTicket = () => {
           </div>
         </div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden border border-blue-700">
             <table className="min-w-full leading-normal">
-              <thead>
+              <thead className="bg-blue-700 text-white text-left text-sm font-semibold uppercase tracking-wider">
                 <tr>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Nomor
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Nama Kereta
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Stasiun Keberangkatan
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Tujuan Keberangkatan
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Waktu Perjalanan
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Aksi
-                  </th>
+                  <th className="px-5 py-3">Nomor</th>
+                  <th className="px-5 py-3">Nama Kereta</th>
+                  <th className="px-5 py-3">Stasiun Keberangkatan</th>
+                  <th className="px-5 py-3">Tujuan Keberangkatan</th>
+                  <th className="px-5 py-3">Waktu Perjalanan</th>
+                  <th className="px-5 py-3">Aksi</th>
                 </tr>
               </thead>
               {!ticket ? (
                 <>Loading</>
               ) : (
-                getPaginatedData().map((item, index) => (
-                  <tbody key={index}>
-                    <tr>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {index + 1}
-                        </p>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {item.train_name.name}
-                        </p>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {item.start_station.name}
-                        </p>
-                        <span>{item.startTime}</span>
-                      </td>
+                getPaginatedData().map((item, index) => {
+                  let startTime = moment(item.startTime, "hh:mm:ss");
+                  let arrivalTime = moment(item.arrivalTime, "hh:mm:ss");
+                  const duration = moment.duration(arrivalTime.diff(startTime));
+                  const hours = parseInt(Math.abs(duration.asHours()));
+                  const minutes = parseInt(duration.asMinutes()) % 60;
+                  return (
+                    <tbody key={index}>
+                      <tr>
+                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {index + 1}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {item.train_name.name}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {item.start_station.name}
+                          </p>
+                          <span>{item.startTime}</span>
+                        </td>
 
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {item.destina_tion.name}
-                        </p>
-                        <span>{item.arrivalTime}</span>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          2j 0m
-                        </p>
-                      </td>
+                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {item.destina_tion.name}
+                          </p>
+                          <span>{item.arrivalTime}</span>
+                        </td>
+                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {hours}j - {minutes}m
+                          </p>
+                        </td>
 
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white">
-                        <ModalDetail
-                          setIdTicket={setIdTicket}
-                          idTicket={idTicket}
-                          item={item}
-                          setShowModal={setShowModal}
-                          showModal={showModal}
-                        />
+                        <td className="px-5 py-5 border-b border-blue-700 bg-white">
+                          <ModalDetail
+                            setIdTicket={setIdTicket}
+                            idTicket={idTicket}
+                            item={item}
+                            setShowModal={setShowModal}
+                            showModal={showModal}
+                          />
 
-                        <button
-                          className=""
-                          type="submit"
-                          onClick={() => {
-                            handleNavigate(item);
-                          }}
-                        >
-                          <svg
-                            className="h-5 w-5 text-green-700"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
+                          <button
+                            className=""
+                            type="submit"
+                            onClick={() => {
+                              handleNavigate(item);
+                            }}
                           >
-                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                            <path
-                              fill-rule="evenodd"
-                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </button>
+                            <svg
+                              className="h-5 w-5 text-green-700"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                              <path
+                                fill-rule="evenodd"
+                                d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </button>
 
-                        <ModalDelete
-                          setIdTicket={setIdTicket}
-                          idTicket={idTicket}
-                          item={item}
-                          setShowModal={setShowModal}
-                          showModal={showModal}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                ))
+                          <ModalDelete
+                            setIdTicket={setIdTicket}
+                            idTicket={idTicket}
+                            item={item}
+                            setShowModal={setShowModal}
+                            showModal={showModal}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })
               )}
             </table>
 
-            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
               <span className="text-xs xs: text-gray-900">
                 Showing 1 to 4 of 50 Entries
               </span>
@@ -205,31 +201,31 @@ const ListTicket = () => {
                   disabled={currentPage === 1 ? true : false}
                   type="submit"
                   className={`${
-                    currentPage === 1 ? "bg-gray-200" : "bg-gray-300"
-                  } text-gray-800 font-semibold py-2 px-4 rounded-r`}
+                    currentPage === 1 ? "bg-blue-300" : "bg-blue-700"
+                  } text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg`}
                 >
                   Preve
                 </button>
                 {getPaginationGroup().map((item, index) => (
-                  <>
-                    <button
-                      className={`${
-                        currentPage === item ? "bg-blue-500" : null
-                      } rounded`}
-                      key={index}
-                      onClick={changePage}
-                    >
-                      <span className="px-5">{item}</span>
-                    </button>
-                  </>
+                  <button
+                    key={index}
+                    className={`${
+                      currentPage === item
+                        ? "border border-blue-700 font-bold "
+                        : null
+                    } rounded mx-2`}
+                    onClick={changePage}
+                  >
+                    <span className="px-5">{item}</span>
+                  </button>
                 ))}
                 <button
                   disabled={currentPage === pages ? true : false}
                   type="submit"
                   onClick={goToNextPage}
                   className={`${
-                    currentPage === pages ? "bg-gray-200" : "bg-gray-300"
-                  } text-gray-800 font-semibold py-2 px-4 rounded-l`}
+                    currentPage === pages ? "bg-blue-300" : "bg-blue-700"
+                  } text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg `}
                 >
                   Next
                 </button>

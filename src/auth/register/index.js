@@ -35,7 +35,7 @@ const Register = () => {
           Halaman Register
         </label>
         {error ? (
-          <div className="relative flex-auto border-b">
+          <div className="mb-4">
             <div
               className="bg-red-100 border-l-4 border-red-500 text-black-700 p-4"
               role="alert"
@@ -57,7 +57,7 @@ const Register = () => {
                   Name
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                   id="name"
                   type="text"
                   name="name"
@@ -76,7 +76,7 @@ const Register = () => {
                   Username
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                   id="username"
                   type="text"
                   name="username"
@@ -98,7 +98,7 @@ const Register = () => {
                   Email
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                   id="email"
                   type="email"
                   name="email"
@@ -117,7 +117,7 @@ const Register = () => {
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                   id="password"
                   type="password"
                   name="password"
@@ -139,7 +139,7 @@ const Register = () => {
               </label>
               <div className="relative">
                 <select
-                  className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded"
                   id="grid-state"
                   onChange={(e) => setForm({ ...form, gender: e.target.value })}
                   value={form.gender}
@@ -168,7 +168,7 @@ const Register = () => {
                 phone
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                 id="phone"
                 type="number"
                 name="phone"
@@ -185,7 +185,7 @@ const Register = () => {
                 Alamat
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                 id="addres"
                 name="addres"
                 value={form.addres}
@@ -195,7 +195,7 @@ const Register = () => {
             </div>
 
             <button
-              className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               type="submit"
               onClick={(e) => handleRegister(e)}
             >

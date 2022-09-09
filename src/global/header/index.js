@@ -74,9 +74,9 @@ const Header = () => {
   );
 
   return (
-    <div className="w-full bg-gray-800	text-white p-5 md:flex md:justify-between items-center mx-auto">
+    <div className="w-full bg-blue-800 text-white p-5 md:flex md:justify-between items-center mx-auto">
       <h1 className="text-2xl font-bold sm:mb-2 md:mb-0">Ticket Train</h1>
-      <div className="font-bold">
+      <div className="font-bold sm:flex sm:justify-between">
         {!token ? <RouteTokenNotExist /> : <RouteTokenExist />}
       </div>
     </div>

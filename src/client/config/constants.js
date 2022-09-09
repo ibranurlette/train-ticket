@@ -16,3 +16,4 @@ export const UPDATE_PAYMENT = "UPDATE_PAYMENT";
 export const UPLOAD_PROOF = "UPLOAD_PROOF";
 export const LIST_STATION = "LIST_STATION";
 export const LIST_TRAIN = "LIST_TRAIN";
+export const LIST_TOWN = "LIST_TOWN";

@@ -77,7 +77,7 @@ const Transaction = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-8">
+    <div className="px-4 sm:px-8 lg:grid h-screen place-items-center">
       <div className="py-8">
         <div>
           <h2 className="text-2xl font-semibold leading-tight">
@@ -132,33 +132,21 @@ const Transaction = () => {
             <input
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search"
-              className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              className="border border-blue-700 py-2 px-8 rounded"
             />
           </div>
         </div>
-        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <table className="min-w-full leading-normal">
-              <thead>
+        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto ">
+          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden border border-blue-700">
+            <table className="min-w-full leading-normal ">
+              <thead className="bg-blue-700 text-white text-left text-sm font-semibold uppercase tracking-wider">
                 <tr>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Nomor
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Pemesan
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Nama Kereta
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Bukti Pembayaran
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                    Aksi
-                  </th>
+                  <th className="px-5 py-3">Nomor</th>
+                  <th className="px-5 py-3">Pemesan</th>
+                  <th className="px-5 py-3">Nama Kereta</th>
+                  <th className="px-5 py-3">Bukti Pembayaran</th>
+                  <th className="px-5 py-3">Status</th>
+                  <th className="px-5 py-3">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -167,22 +155,22 @@ const Transaction = () => {
                 ) : (
                   getPaginatedData().map((item, index) => (
                     <tr key={index}>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {index + 1}
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.user.name}
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.train.train_name.name}
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white ">
+                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
                         {item.attachment ? (
                           <ModalImage
                             showModal={showModal}
@@ -196,7 +184,7 @@ const Transaction = () => {
                           <p className="text-gray-900">Belum Ada Bukti</p>
                         )}
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white  ">
+                      <td className="px-5 py-5 border-b border-blue-700 bg-white  ">
                         <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                           <span
                             aria-hidden
@@ -211,7 +199,7 @@ const Transaction = () => {
                           <span className="relative">{item.status}</span>
                         </span>
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white">
+                      <td className="px-5 py-5 border-b border-blue-700 bg-white">
                         <ModalDetail
                           setIdTransaction={setIdTransaction}
                           idTransaction={idTransaction}
@@ -236,7 +224,7 @@ const Transaction = () => {
               </tbody>
             </table>
 
-            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
               <span className="text-xs xs: text-gray-900">
                 Showing 1 to 4 of 50 Entries
               </span>
@@ -246,8 +234,8 @@ const Transaction = () => {
                   disabled={currentPage === 1 ? true : false}
                   type="submit"
                   className={`${
-                    currentPage === 1 ? "bg-gray-200" : "bg-gray-300"
-                  } text-gray-800 font-semibold py-2 px-4 rounded-r`}
+                    currentPage === 1 ? "bg-blue-300" : "bg-blue-700"
+                  } text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg`}
                 >
                   Preve
                 </button>
@@ -255,8 +243,10 @@ const Transaction = () => {
                   <button
                     key={index}
                     className={`${
-                      currentPage === item ? "bg-blue-500" : null
-                    } rounded`}
+                      currentPage === item
+                        ? "border border-blue-700 font-bold "
+                        : null
+                    } rounded mx-2`}
                     onClick={changePage}
                   >
                     <span className="px-5">{item}</span>
@@ -267,8 +257,8 @@ const Transaction = () => {
                   type="submit"
                   onClick={goToNextPage}
                   className={`${
-                    currentPage === pages ? "bg-gray-200" : "bg-gray-300"
-                  } text-gray-800 font-semibold py-2 px-4 rounded-l`}
+                    currentPage === pages ? "bg-blue-300" : "bg-blue-700"
+                  } text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg `}
                 >
                   Next
                 </button>

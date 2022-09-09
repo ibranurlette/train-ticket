@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Tambah_train } from "../../client/_action/train";
 import { getUsers } from "../../client/_action/user";
-import { getListTrain } from "../../client/_action/train";
-import { getListStation } from "../../client/_action/train";
+import {
+  Tambah_train,
+  getListTrain,
+  getListStation,
+  getListTown,
+} from "../../client/_action/train";
 
 const CreateTicket = () => {
   const dispatch = useDispatch();
@@ -14,11 +17,15 @@ const CreateTicket = () => {
   const [error, setError] = useState("");
   const [listTrain, setListTrain] = useState([]);
   const [listStation, setListStation] = useState([]);
+  const [listTown, setListTown] = useState([]);
   const [data, setData] = useState({
     nameTrain: "",
     dateStart: "",
+    dateEndTravel: "",
     user_id: "",
     startStation: "",
+    startTown: "",
+    endTown: "",
     startTime: "",
     destination: "",
     arrivalTime: "",
@@ -27,6 +34,8 @@ const CreateTicket = () => {
     qty: "",
     typeTrain_id: "",
   });
+
+  console.log("data", data);
 
   useEffect(() => {
     dispatch(getUsers())
@@ -48,6 +57,16 @@ const CreateTicket = () => {
         setError(err.response.data.message);
       });
   };
+
+  useEffect(() => {
+    dispatch(getListTown())
+      .then(async (res) => {
+        setListTown(res.value);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getListTrain())
@@ -169,7 +188,7 @@ const CreateTicket = () => {
                 Tanggal Keberangkatan
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
                 id="start-date-time"
                 type="date"
                 value={data.dateStart}
@@ -178,7 +197,46 @@ const CreateTicket = () => {
                 }}
               />
             </div>
-            <div className="flex">
+            <div className="flex justify-between">
+              <div className="mb-6">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="end-time"
+                >
+                  Kota Keberangkatan
+                </label>
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="name-train"
+                    value={data.startTown}
+                    onChange={(e) => {
+                      setData({ ...data, startTown: e.target.value });
+                    }}
+                  >
+                    <option value="">Pilih</option>
+                    {listTown.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listTown.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
               <div className="mb-6 mr-2">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -201,6 +259,47 @@ const CreateTicket = () => {
                       <>Loading</>
                     ) : (
                       listStation.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <div className="mb-6 mr-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="start-time"
+                >
+                  Kota Tujuan
+                </label>
+
+                <div className="relative">
+                  <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="name-train"
+                    value={data.endTown}
+                    onChange={(e) => {
+                      setData({ ...data, endTown: e.target.value });
+                    }}
+                  >
+                    <option value="">Pilih</option>
+                    {listTown.length === 0 ? (
+                      <>Loading</>
+                    ) : (
+                      listTown.map((item, index) => (
                         <option key={index} value={item.id}>
                           {item.name}
                         </option>
@@ -268,7 +367,7 @@ const CreateTicket = () => {
                   Jam Keberangkatan
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
                   id="start-time"
                   type="time"
                   value={data.startTime}
@@ -286,7 +385,7 @@ const CreateTicket = () => {
                   Jam Tiba
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
                   id="end-time"
                   type="time"
                   value={data.arrivalTime}
@@ -295,6 +394,24 @@ const CreateTicket = () => {
                   }}
                 />
               </div>
+            </div>
+
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="start-date-time"
+              >
+                Tanggal Sampai
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
+                id="start-date-time"
+                type="date"
+                value={data.dateEndTravel}
+                onChange={(e) => {
+                  setData({ ...data, dateEndTravel: e.target.value });
+                }}
+              />
             </div>
 
             <div className="flex">
@@ -306,7 +423,7 @@ const CreateTicket = () => {
                   Harga Tiket (Rp)
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
                   id="price-ticket"
                   type="number"
                   value={data.price}
@@ -323,7 +440,7 @@ const CreateTicket = () => {
                   Stok Tersedia
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
                   id="qty"
                   type="number"
                   value={data.totalQty}
@@ -342,7 +459,7 @@ const CreateTicket = () => {
                 Minimal pembelian (1)
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
                 id="qty"
                 type="number"
                 value={data.qty}
@@ -352,7 +469,7 @@ const CreateTicket = () => {
               />
             </div>
             <button
-              className="bg-gray-800 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-700 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
               type="submit"
               onClick={(e) => handleCreate(e)}
             >

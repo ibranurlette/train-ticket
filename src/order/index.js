@@ -59,7 +59,7 @@ const Order = () => {
 
   return (
     <div className="sm:w-[20rem] md:w-[50rem] mx-auto sm:mt-5">
-      <p className="mb-2 text-gray-700 font-bold">Daftar Pesanan Kamu</p>
+      <p className="mb-2 text-lg font-bold">Daftar Pesanan Kamu</p>
 
       <div className="my-2 flex sm:flex-row flex-col">
         <div className="block relative">
@@ -74,7 +74,7 @@ const Order = () => {
           <input
             onChange={(e) => setSearch(e.target.value)}
             placeholder="pending"
-            className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+            className="border border-blue-700 py-2 px-8 rounded"
           />
         </div>
       </div>
@@ -86,9 +86,9 @@ const Order = () => {
         getPaginatedData().map((item, index) => (
           <div
             key={index}
-            className="border shadow-md rounded-lg py-2 bg-gray-50 mb-5"
+            className="border border-blue-700 shadow-md rounded-lg py-2  mb-5"
           >
-            <div className="md:flex md:justify-around border-b pb-2">
+            <div className="md:flex md:justify-around border-b border-blue-700 pb-2">
               <div>
                 <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center md:text-left">
                   {item.train.train_name.name}
@@ -135,12 +135,10 @@ const Order = () => {
               </div>
             </div>
             <div className="md:ml-10 mt-2 sm:text-center md:text-left">
-              <p className="text-gray-900 text-[15px] font-semibold mb-2">
-                {item.status}
-              </p>
+              <p className="font-semibold mb-2">{item.status}</p>
               {item.status !== "menunggu disetujui" && (
                 <button
-                  className="bg-gray-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-blue-700 text-white font-bold text-sm px-4 py-2 rounded shadow hover:shadow-lg"
                   type="submit"
                   onClick={() => {
                     console.log("item", item);
@@ -157,8 +155,8 @@ const Order = () => {
       <div className="flex justify-center mb-5">
         <button
           className={`${
-            currentPage === 1 ? "bg-gray-300" : "bg-gray-900"
-          }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 mb-1 ease-linear transition-all duration-150`}
+            currentPage === 1 ? "bg-blue-300" : "bg-blue-700"
+          }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg`}
           disabled={currentPage === 1 ? true : false}
           type="submit"
           onClick={goToPreviousPage}
@@ -169,7 +167,9 @@ const Order = () => {
         {getPaginationGroup().map((item, index) => (
           <button
             key={index}
-            className={`${currentPage === item ? "bg-blue-500" : null} rounded`}
+            className={`${
+              currentPage === item ? "border border-blue-700 font-bold " : null
+            } rounded mx-2`}
             onClick={changePage}
           >
             <span className="px-5">{item}</span>
@@ -178,8 +178,8 @@ const Order = () => {
 
         <button
           className={`${
-            currentPage === pages ? "bg-gray-300" : "bg-gray-900"
-          }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ml-2 ease-linear transition-all duration-150`}
+            currentPage === pages ? "bg-blue-300" : "bg-blue-700"
+          }  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg `}
           disabled={currentPage === pages ? true : false}
           type="submit"
           onClick={goToNextPage}
