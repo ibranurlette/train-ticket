@@ -137,7 +137,7 @@ const Transaction = () => {
           </div>
         </div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto ">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden border border-blue-700">
+          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden border border-gray-300">
             <table className="min-w-full leading-normal ">
               <thead className="bg-blue-700 text-white text-left text-sm font-semibold uppercase tracking-wider">
                 <tr>
@@ -155,22 +155,22 @@ const Transaction = () => {
                 ) : (
                   getPaginatedData().map((item, index) => (
                     <tr key={index}>
-                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                      <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {index + 1}
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                      <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.user.name}
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                      <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.train.train_name.name}
                         </p>
                       </td>
-                      <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                      <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                         {item.attachment ? (
                           <ModalImage
                             showModal={showModal}
@@ -184,7 +184,7 @@ const Transaction = () => {
                           <p className="text-gray-900">Belum Ada Bukti</p>
                         )}
                       </td>
-                      <td className="px-5 py-5 border-b border-blue-700 bg-white  ">
+                      <td className="px-5 py-5 border-b border-gray-300 bg-white  ">
                         <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                           <span
                             aria-hidden
@@ -199,7 +199,7 @@ const Transaction = () => {
                           <span className="relative">{item.status}</span>
                         </span>
                       </td>
-                      <td className="px-5 py-5 border-b border-blue-700 bg-white">
+                      <td className="px-5 py-5 border-b border-gray-300 bg-white">
                         <ModalDetail
                           setIdTransaction={setIdTransaction}
                           idTransaction={idTransaction}

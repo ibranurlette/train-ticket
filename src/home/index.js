@@ -229,9 +229,9 @@ const Home = () => {
               key={index}
               className="mx-auto mb-5 p-6 max-w-3xl bg-white rounded-lg border border-blue-700 rounded shadow-md dark:bg-gray-800 dark:border-gray-700"
             >
-              <div className="md:flex md:justify-around">
+              <div className="md:flex md:justify-between">
                 <div>
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                     {item.train_name.name}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
@@ -323,7 +323,7 @@ const Home = () => {
                   <div className="h-px bg-gray-300" />
                   <div className="lg:flex lg:justify-start mt-5">
                     <div className="sm:text-center lg:text-left lg:mr-16 ">
-                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                      <h5 className="text-md font-bold tracking-tight text-gray-900">
                         {item.train_name.name}
                       </h5>
                       <p className="text-gray-500 font-semibold text-[14px]">

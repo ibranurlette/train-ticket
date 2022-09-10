@@ -103,11 +103,11 @@ const Order = () => {
           return (
             <div
               key={index}
-              className="mb-5 p-6 bg-white rounded-lg border border-blue-700 rounded shadow-md dark:bg-gray-800 dark:border-gray-700"
+              className="mb-5 p-6 bg-white rounded-lg border border-blue-700 rounded shadow-md"
             >
-              <div className="md:flex md:justify-around">
+              <div className="md:flex md:justify-between">
                 <div>
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900">
                     {item.train.train_name.name}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
@@ -165,22 +165,27 @@ const Order = () => {
                   <h5 className="text-lg font-bold text-gray-900 mb-2">
                     Rp {item.Total_price}
                   </h5>
-                  {item.status !== "menunggu disetujui" && (
-                    <button
-                      className="sm:w-full bg-blue-700 text-white font-bold text-sm py-2 md:px-4 rounded shadow hover:shadow-lg"
-                      type="submit"
-                      onClick={() => {
-                        console.log("item", item);
-                        handlebuy(item);
-                      }}
-                    >
-                      Bayar Sekarang
-                    </button>
-                  )}
                 </div>
               </div>
               {/* Main modal */}
 
+              <div className="">
+                <h5 className="text-md font-bold text-gray-900 mb-2">
+                  {item.status}
+                </h5>
+                {item.status !== "menunggu disetujui" && (
+                  <button
+                    className="sm:w-full md:w-40  bg-blue-700 text-white font-bold text-sm py-2 rounded shadow hover:shadow-lg"
+                    type="submit"
+                    onClick={() => {
+                      console.log("item", item);
+                      handlebuy(item);
+                    }}
+                  >
+                    Bayar Sekarang
+                  </button>
+                )}
+              </div>
               <div className="mt-5 text-center ">
                 <button
                   onClick={() => {
@@ -203,7 +208,7 @@ const Order = () => {
                 <div>
                   <div className="h-px bg-gray-300" />
                   <div className="lg:flex lg:justify-start mt-5">
-                    <div className="sm:text-center lg:text-left lg:mr-16 ">
+                    <div className="lg:mr-16 ">
                       <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
                         {item.train.train_name.name}
                       </h5>

@@ -95,7 +95,7 @@ const CreateTicket = () => {
           Buat Tiket
         </label>
         {error ? (
-          <div className="relative flex-auto border-b">
+          <div className="relative flex-auto border-b mb-4">
             <div
               className="bg-red-100 border-l-4 border-red-500 text-black-700 p-4"
               role="alert"
@@ -118,7 +118,7 @@ const CreateTicket = () => {
                 </label>
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block sm:w-[145px] md:w-[210px] appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded"
                     id="name-train"
                     value={data.nameTrain}
                     onChange={(e) => {
@@ -156,7 +156,7 @@ const CreateTicket = () => {
                 </label>
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none sm:w-[145px] md:w-[210px] bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded"
                     id="type-train"
                     value={data.typeTrain_id}
                     onChange={(e) => {
@@ -180,34 +180,59 @@ const CreateTicket = () => {
                 </div>
               </div>
             </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="start-date-time"
-              >
-                Tanggal Keberangkatan
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
-                id="start-date-time"
-                type="date"
-                value={data.dateStart}
-                onChange={(e) => {
-                  setData({ ...data, dateStart: e.target.value });
-                }}
-              />
+
+            <h2 className="block text-gray-700 text-md font-bold mb-2">
+              Keberangkatan
+            </h2>
+
+            <div className="flex justify-between mb-4">
+              <div className="mr-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="start-date-time"
+                >
+                  Tanggal
+                </label>
+                <input
+                  className="shadow appearance-none sm:w-[145px] md:w-[210px] border rounded w-full py-2 px-3 text-gray-700 mb-3"
+                  id="start-date-time"
+                  type="date"
+                  value={data.dateStart}
+                  onChange={(e) => {
+                    setData({ ...data, dateStart: e.target.value });
+                  }}
+                />
+              </div>
+              <div className="">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="start-time"
+                >
+                  Jam
+                </label>
+                <input
+                  className="shadow appearance-none border rounded sm:w-[145px] md:w-[210px] py-2 px-4 text-gray-700 mb-3"
+                  id="start-time"
+                  type="time"
+                  value={data.startTime}
+                  onChange={(e) => {
+                    setData({ ...data, startTime: e.target.value });
+                  }}
+                />
+              </div>
             </div>
+
             <div className="flex justify-between">
-              <div className="mb-6">
+              <div className="mb-6 mr-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="end-time"
                 >
-                  Kota Keberangkatan
+                  Kota
                 </label>
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none sm:w-[145px] md:w-[210px] bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4"
                     id="name-train"
                     value={data.startTown}
                     onChange={(e) => {
@@ -237,17 +262,17 @@ const CreateTicket = () => {
                 </div>
               </div>
 
-              <div className="mb-6 mr-2">
+              <div className="mb-6">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="start-time"
                 >
-                  Stasiun Keberangkatan
+                  Stasiun
                 </label>
 
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none sm:w-[145px] md:w-[210px] bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded"
                     id="name-train"
                     value={data.startStation}
                     onChange={(e) => {
@@ -277,18 +302,22 @@ const CreateTicket = () => {
                 </div>
               </div>
             </div>
+            <h2 className="block text-gray-700 text-md font-bold mb-2">
+              Tujuan
+            </h2>
+
             <div className="flex justify-between">
               <div className="mb-6 mr-2">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="start-time"
                 >
-                  Kota Tujuan
+                  Kota
                 </label>
 
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none sm:w-[145px] md:w-[210px] bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded"
                     id="name-train"
                     value={data.endTown}
                     onChange={(e) => {
@@ -323,11 +352,11 @@ const CreateTicket = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="end-time"
                 >
-                  Stasiun Tujuan
+                  Stasiun
                 </label>
                 <div className="relative">
                   <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block appearance-none sm:w-[145px] md:w-[210px] bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded"
                     id="name-train"
                     value={data.destination}
                     onChange={(e) => {
@@ -358,34 +387,34 @@ const CreateTicket = () => {
               </div>
             </div>
 
-            <div className="flex justify-between">
-              <div className="mb-6">
+            <div className="flex justify-between mb-4">
+              <div className="">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="start-time"
+                  htmlFor="start-date-time"
                 >
-                  Jam Keberangkatan
+                  Tanggal
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
-                  id="start-time"
-                  type="time"
-                  value={data.startTime}
+                  className="shadow appearance-none border sm:w-[145px] md:w-[210px] rounded w-full py-2 px-3 text-gray-700 mb-3"
+                  id="start-date-time"
+                  type="date"
+                  value={data.dateEndTravel}
                   onChange={(e) => {
-                    setData({ ...data, startTime: e.target.value });
+                    setData({ ...data, dateEndTravel: e.target.value });
                   }}
                 />
               </div>
 
-              <div className="mb-6">
+              <div className="">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="end-time"
                 >
-                  Jam Tiba
+                  Jam
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
+                  className="shadow appearance-none border rounded sm:w-[145px] md:w-[210px] py-2 px-4 text-gray-700 mb-3"
                   id="end-time"
                   type="time"
                   value={data.arrivalTime}
@@ -396,25 +425,7 @@ const CreateTicket = () => {
               </div>
             </div>
 
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="start-date-time"
-              >
-                Tanggal Sampai
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
-                id="start-date-time"
-                type="date"
-                value={data.dateEndTravel}
-                onChange={(e) => {
-                  setData({ ...data, dateEndTravel: e.target.value });
-                }}
-              />
-            </div>
-
-            <div className="flex">
+            <div className="flex justify-between">
               <div className="mb-6 mr-2">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -423,9 +434,10 @@ const CreateTicket = () => {
                   Harga Tiket (Rp)
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                   id="price-ticket"
                   type="number"
+                  placeholder="Rp. 50.000"
                   value={data.price}
                   onChange={(e) => {
                     setData({ ...data, price: e.target.value });
@@ -440,9 +452,10 @@ const CreateTicket = () => {
                   Stok Tersedia
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                   id="qty"
                   type="number"
+                  placeholder="100"
                   value={data.totalQty}
                   onChange={(e) => {
                     setData({ ...data, totalQty: e.target.value });
@@ -459,9 +472,10 @@ const CreateTicket = () => {
                 Minimal pembelian (1)
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
                 id="qty"
                 type="number"
+                placeholder="1"
                 value={data.qty}
                 onChange={(e) => {
                   setData({ ...data, qty: e.target.value });

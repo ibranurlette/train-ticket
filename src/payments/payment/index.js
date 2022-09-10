@@ -140,7 +140,7 @@ const Payment = () => {
             <div className="mb-5 p-6 bg-white rounded-lg border border-blue-500 rounded shadow-md">
               <div className="md:flex md:justify-around">
                 <div>
-                  <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white sm:text-center">
+                  <h5 className="text-lg font-bold tracking-tight text-gray-900">
                     {train.train_name.name}
                   </h5>
                   <p className="text-gray-500 text-[15px]">
@@ -149,7 +149,7 @@ const Payment = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="mr-5">
-                    <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                    <h5 className="text-lg font-bold tracking-tight text-gray-900">
                       {train.startTime}
                     </h5>
                     <p className="text-gray-500 text-[15px]">
@@ -224,8 +224,8 @@ const Payment = () => {
                 <div>
                   <div className="h-px bg-gray-300" />
                   <div className="lg:flex lg:justify-start mt-5">
-                    <div className="sm:text-center lg:text-left lg:mr-16 ">
-                      <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+                    <div className="lg:mr-16 ">
+                      <h5 className="text-md font-bold tracking-tight text-gray-900">
                         {train.train_name.name}
                       </h5>
                       <p className="text-gray-500 font-semibold text-[14px]">

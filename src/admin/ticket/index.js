@@ -93,7 +93,7 @@ const ListTicket = () => {
           </div>
         </div>
         <div className="sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden border border-blue-700">
+          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden border border-gray-300">
             <table className="min-w-full leading-normal">
               <thead className="bg-blue-700 text-white text-left text-sm font-semibold uppercase tracking-wider">
                 <tr>
@@ -117,36 +117,36 @@ const ListTicket = () => {
                   return (
                     <tbody key={index}>
                       <tr>
-                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                        <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {index + 1}
                           </p>
                         </td>
-                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                        <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {item.train_name.name}
                           </p>
                         </td>
-                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                        <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {item.start_station.name}
                           </p>
                           <span>{item.startTime}</span>
                         </td>
 
-                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                        <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {item.destina_tion.name}
                           </p>
                           <span>{item.arrivalTime}</span>
                         </td>
-                        <td className="px-5 py-5 border-b border-blue-700 bg-white ">
+                        <td className="px-5 py-5 border-b border-gray-300 bg-white ">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {hours}j - {minutes}m
                           </p>
                         </td>
 
-                        <td className="px-5 py-5 border-b border-blue-700 bg-white">
+                        <td className="px-5 py-5 border-b border-gray-300 bg-white">
                           <ModalDetail
                             setIdTicket={setIdTicket}
                             idTicket={idTicket}
