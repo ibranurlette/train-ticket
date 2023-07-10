@@ -3,24 +3,16 @@ import { AUTH, AUTH_RELOAD } from "../config/constants";
 import { API, setAuthToken } from "../config/api";
 
 export const login = (data) => {
+  console.log("DATAAASS LOGIMN", data);
   return {
     type: AUTH,
     payload: async () => {
-      const res = await API.post("/login", data);
-      const { token } = res.data;
-      localStorage.setItem("token", token);
-      return res.data;
-    },
-  };
-};
+      const res = await API.post("/office/login", data);
+      console.log("RESPONSEKUUU", res);
 
-export const register = (data) => {
-  return {
-    type: AUTH,
-    payload: async () => {
-      const res = await API.post("/register", data);
       const { token } = res.data;
       localStorage.setItem("token", token);
+      console.log("RESPONSE DATA", res.data);
       return res.data;
     },
   };

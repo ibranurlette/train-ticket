@@ -9,27 +9,27 @@ const Login = () => {
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
 
   const handleLogin = () => {
     dispatch(login({ username, password }))
       .then(async (res) => {
-        res.value.status === "1"
-          ? navigate("/transaction", { replace: true })
-          : navigate("/", { replace: true });
+        navigate("/report", { replace: true });
       })
       .catch((err) => {
-        setError(err.response.data.message);
+        navigate("/", { replace: true });
+        setError(err.response.data.error);
       });
   };
 
+  console.log("ERRORO DARI LOGIN", error);
   return (
     <div className="mx-auto w-96">
       <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8">
         <label className="block text-gray-700 text-lg font-bold mb-5">
           Halaman Login
         </label>
-        {error ? (
+        {/* {error ? (
           <div className="relative flex-auto border-b">
             <div
               className="bg-red-100 border-l-4 border-red-500 text-black-700 p-4"
@@ -40,7 +40,7 @@ const Login = () => {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
         <div className="">
           <div>
             <div className="mb-6">
@@ -51,7 +51,7 @@ const Login = () => {
                 Username
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
                 id="username"
                 type="text"
                 name="username"
@@ -61,6 +61,14 @@ const Login = () => {
                 }}
                 placeholder="Username"
               />
+              {error.map(
+                (error, index) =>
+                  error.path === "username" && (
+                    <div key={index} className="text-red-500 text-sm mt-3">
+                      {error.msg}
+                    </div>
+                  )
+              )}
             </div>
             <div className="mb-6">
               <label
@@ -70,7 +78,7 @@ const Login = () => {
                 Password
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
                 id="password"
                 type="password"
                 name="password"
@@ -78,6 +86,14 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="*********"
               />
+              {error.map(
+                (error, index) =>
+                  error.path === "password" && (
+                    <div key={index} className="text-red-500 text-sm mt-3">
+                      {error.msg}
+                    </div>
+                  )
+              )}
             </div>
 
             <button

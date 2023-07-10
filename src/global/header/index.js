@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { getUsers } from "../../client/_action/user";
+// import { getUsers } from "../../client/_action/user";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,15 +15,15 @@ const Header = () => {
     navigate("/", { replace: true });
   };
 
-  useEffect(() => {
-    dispatch(getUsers())
-      .then(async (res) => {
-        setUser(res.value);
-      })
-      .catch((err) => {
-        console.log("ERROR GET USER", err);
-      });
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   dispatch(getUsers())
+  //     .then(async (res) => {
+  //       setUser(res.value);
+  //     })
+  //     .catch((err) => {
+  //       console.log("ERROR GET USER", err);
+  //     });
+  // }, [dispatch, token]);
 
   const RouteAdmin = () => (
     <>
@@ -46,11 +46,14 @@ const Header = () => {
           <RouteAdmin />
         ) : (
           <>
-            <Link to="/" className="mr-5">
+            <Link to="/report" className="mr-5">
               Home
             </Link>
-            <Link to="/order" className="mr-5">
-              Order
+            <Link to="/user-app" className="mr-5">
+              User App
+            </Link>
+            <Link to="/user-office" className="mr-5">
+              User Office
             </Link>
           </>
         )}

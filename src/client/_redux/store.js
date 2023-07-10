@@ -1,10 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 
 import auth from "../_reducers/auth";
+import report from "../_reducers/report";
+import userApp from "../_reducers/user-app";
+import userOffice from "../_reducers/user-office";
+
 import auth_reload from "../_reducers/auth_reload";
 import tickets from "../_reducers/tickets";
 import ticket from "../_reducers/ticket";
-import user from "../_reducers/user";
+// import user from "../_reducers/user";
 import Tambah_train from "../_reducers/tambah_train";
 import Beli_ticket from "../_reducers/beli_ticket";
 import Hapus_payment from "../_reducers/hapus_payment";
@@ -18,10 +22,14 @@ import { logger, promise } from "../middleware";
 // Global state
 const rootReducers = combineReducers({
   auth,
+  report,
+  userApp,
+  userOffice,
+
   auth_reload,
   ticket,
   tickets,
-  user,
+  // user,
   payment,
   Tambah_train,
   Type_train,

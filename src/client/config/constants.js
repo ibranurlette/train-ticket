@@ -1,4 +1,8 @@
 export const AUTH = "AUTH";
+export const GET_REPORT = "GET_REPORT";
+export const GET_USER_APP = "GET_USER_APP";
+export const GET_USER_OFFICE = "GET_USER_OFFICE";
+
 export const AUTH_RELOAD = "AUTH_RELOAD";
 export const GET_MYTICKET = "GET_MYTICKET";
 export const GET_ONE_TICKET = "GET_ONE_TICKET";

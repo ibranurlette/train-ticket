@@ -31,7 +31,7 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: console.log("MY ACTIONS", action),
+        error: console.log("MY ACTIONS", action.payload),
       };
     default:
       return state;
